@@ -5,7 +5,546 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f6f7f8">
   <title>DD订阅 · 业务评审第二版</title>
-  <link rel="stylesheet" href="styles.css">
+  <style>:root{--accent:#ff5a36;--accent-soft:#fff1eb;--ink:#17191c;--secondary:#6d727c;--muted:#969ba3;--line:#eceef1;--bg:#f5f6f8;--green:#328568;--radius:18px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;color:var(--ink);font-synthesis:none}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}body{margin:0;background:#e9ebee}button,input,select,textarea{font:inherit}button{border:0;background:none;color:inherit;cursor:pointer;padding:0}button:disabled{cursor:default;opacity:.45}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:3px}button:active:not(:disabled){opacity:.7}input,textarea,select{min-width:0;color:var(--ink)}h1,h2,h3,p{margin:0}img{max-width:100%;display:block}strong,b{font-weight:600}a{color:inherit}svg.icon{width:21px;height:21px;stroke:currentColor;stroke-width:1.7;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;vertical-align:middle}.icon.small{width:16px;height:16px}
+.stage{min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px 0 10px}.preview-label{width:390px;display:flex;justify-content:space-between;font-size:11px;color:#8a8e96;letter-spacing:.7px;margin-bottom:12px}.preview-label span:first-child{color:#4f535a;font-weight:600}.preview-foot{font-size:10px;color:#9a9da4;margin-top:12px}.phone{position:relative;width:390px;height:min(860px,calc(100dvh - 84px));min-height:620px;border-radius:28px;overflow:hidden;background:var(--bg);box-shadow:0 20px 75px #222b3b16,0 0 0 1px #ffffffaa}.screen{height:100%;overflow:auto;overscroll-behavior:contain;scrollbar-width:none;padding-bottom:90px}.screen::-webkit-scrollbar{display:none}.screen.white{background:white}.statusbar{height:32px;display:flex;align-items:center;justify-content:space-between;padding:7px 22px 0;font-size:12px;font-weight:600;letter-spacing:.2px;position:relative;z-index:3}.status-icons{display:flex;align-items:center;gap:5px;font-size:11px}.signal{display:flex;align-items:flex-end;gap:2px;height:12px}.signal i{width:3px;border-radius:1px;background:currentColor}.signal i:nth-child(1){height:4px}.signal i:nth-child(2){height:6px}.signal i:nth-child(3){height:9px}.signal i:nth-child(4){height:12px}.battery{width:22px;height:11px;border:1px solid currentColor;border-radius:3px;position:relative;margin-left:3px}.battery:before{content:"";position:absolute;inset:1px 3px 1px 1px;background:currentColor;border-radius:1px}.battery:after{content:"";position:absolute;right:-3px;top:3px;width:2px;height:4px;background:currentColor;border-radius:1px}
+.page-head{height:48px;display:grid;grid-template-columns:44px 1fr 44px;align-items:center;padding:0 12px;position:relative;z-index:5}.page-head h1{text-align:center;font-size:16px;font-weight:600;letter-spacing:.3px}.icon-button{width:40px;height:40px;display:grid;place-items:center}.page-pad{padding:12px 16px 20px}.stack{display:grid;gap:12px}.card{background:white;border-radius:var(--radius);padding:18px}.section-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:10px}.section-heading h2{font-size:17px;font-weight:600;letter-spacing:-.3px}.section-heading button{font-size:12px;color:var(--secondary);display:flex;align-items:center;gap:3px}.muted{color:var(--secondary)}.small-text{font-size:12px;line-height:1.6;color:var(--secondary)}.eyebrow{font-size:11px;color:var(--secondary);letter-spacing:.3px}.primary{display:flex;align-items:center;justify-content:center;background:var(--accent);color:white;min-height:46px;padding:0 18px;border-radius:12px;font-size:15px;font-weight:600;width:100%;white-space:nowrap}.secondary{display:flex;align-items:center;justify-content:center;min-height:40px;padding:0 16px;border:1px solid #dfe2e7;border-radius:10px;background:white;font-size:13px;white-space:nowrap}.text-button{color:var(--accent);font-size:13px;display:inline-flex;align-items:center;gap:3px;min-height:36px}.divider{height:1px;background:var(--line)}.tag{font-size:10px;color:var(--secondary);background:#f3f4f6;padding:3px 6px;border-radius:5px;white-space:nowrap}.tag.accent{color:#d85b39;background:var(--accent-soft)}.price{color:var(--accent);font-variant-numeric:tabular-nums;white-space:nowrap;font-size:23px;font-weight:600;letter-spacing:-.6px}.price .currency{font-size:13px;letter-spacing:0;margin-right:2px}.price .unit{font-size:11px;font-weight:400;letter-spacing:0;color:var(--secondary);margin-left:3px}.hint{font-size:11px;color:var(--secondary);line-height:1.6}.pill-row{display:flex;gap:6px;flex-wrap:wrap}
+.home-head{display:flex;align-items:center;justify-content:space-between;height:54px;padding:0 16px}.brand{font-size:22px;font-weight:800;letter-spacing:-1px}.brand em{color:var(--accent);font-style:normal}.home-brand-group{display:flex;align-items:center;gap:16px}.city-button{font-size:13px;display:flex;align-items:center;gap:4px}.home-body{padding:0 14px}.home-banner{height:152px;border-radius:16px 16px 0 0;position:relative;overflow:hidden;background:#ef6938}.home-banner img{width:100%;height:100%;object-fit:cover}.banner-copy{position:absolute;inset:22px auto auto 17px;color:white;z-index:1;text-shadow:0 1px 12px #a64e2820}.banner-copy h1{font-size:22px;line-height:1.45;letter-spacing:-.4px;font-weight:650}.banner-copy p{font-size:12px;margin-top:6px;opacity:.95}.banner-dots{position:absolute;left:18px;bottom:22px;display:flex;gap:4px}.banner-dots i{height:3px;width:10px;background:#ffffff70;border-radius:4px}.banner-dots i:first-child{width:19px;background:white}.booking-card{background:white;border-radius:18px;margin-top:-12px;position:relative;padding:0 16px 13px}.mode-tabs{display:flex;gap:0;margin:0 -16px 2px;border-radius:18px 18px 0 0;overflow:hidden;background:#f4f5f7}.mode-tabs button{flex:1;height:48px;font-size:15px;color:var(--secondary);position:relative}.mode-tabs button.active{font-weight:600;background:white;color:var(--ink);border-radius:0 16px 0 0}.mode-tabs button.active:after{content:"";position:absolute;bottom:4px;left:calc(50% - 11px);width:22px;height:3px;border-radius:2px;background:var(--accent)}.booking-row{height:48px;display:flex;align-items:center;width:100%;border-bottom:1px solid var(--line);gap:12px;font-size:14px}.booking-row .icon{width:19px;height:19px}.booking-row>span{flex:1;text-align:left}.booking-row>b{font-size:14px;font-weight:500}.booking-row>.small{color:#a3a6ad;width:15px;height:15px}.booking-card>.primary{margin-top:14px}.trust-line{text-align:center;font-size:11px;color:var(--secondary);margin-top:11px}.quick-links{margin:12px 0 19px;background:white;border-radius:16px;display:grid;grid-template-columns:repeat(4,1fr);padding:15px 4px}.quick-links button{display:flex;align-items:center;flex-direction:column;gap:8px;font-size:11px;position:relative}.quick-links .icon{width:22px;height:22px}.quick-links button+button:before{content:"";position:absolute;left:0;top:4px;bottom:3px;width:1px;background:var(--line)}.home-recommend{display:grid;gap:10px}.vehicle-row{display:grid;grid-template-columns:132px 1fr;align-items:center;gap:12px;text-align:left;background:white;border-radius:16px;padding:8px;width:100%;min-width:0}.vehicle-thumb{height:105px;border-radius:10px;background:#f0f1f2;overflow:hidden;position:relative}.vehicle-thumb img{width:100%;height:100%;object-fit:cover}.vehicle-row-copy{min-width:0;padding:2px 2px 2px 0}.vehicle-row h3{font-size:15px;font-weight:600;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.vehicle-row .descriptor{font-size:11px;color:var(--secondary);margin-bottom:7px}.vehicle-row .price{font-size:22px}.vehicle-row .pill-row{margin-bottom:8px}.home-note{padding:19px 12px 6px;text-align:center;font-size:11px;line-height:1.7;color:#a0a4ab}
+.tabbar{position:absolute;bottom:0;left:0;right:0;z-index:20;display:grid;grid-template-columns:repeat(4,1fr);height:calc(68px + env(safe-area-inset-bottom,0px));padding:8px 0 calc(10px + env(safe-area-inset-bottom,0px));border-top:1px solid #e9ebee;background:#fffffffa;backdrop-filter:blur(20px)}.nav-item{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px;font-size:11px;color:#636872}.nav-item .icon{width:23px;height:23px;stroke-width:1.7}.nav-item.active{color:var(--accent)}
+.catalog-controls{padding:8px 16px 12px;background:var(--bg);position:sticky;top:0;z-index:6}.search-field{height:40px;background:white;border-radius:10px;display:flex;align-items:center;gap:8px;padding:0 12px;border:1px solid var(--line)}.search-field .icon{width:17px;height:17px;color:var(--secondary)}.search-field input{border:0;outline:0;background:transparent;width:100%;font-size:12px}.catalog-modes{display:flex;gap:23px;margin-top:17px}.catalog-modes button{font-size:15px;position:relative;padding-bottom:10px;color:var(--secondary)}.catalog-modes button.active{font-weight:600;color:var(--ink)}.catalog-modes button.active:after{content:"";position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--accent)}.filter-row{display:flex;align-items:center;gap:7px;padding-top:12px}.filter-chip{border:1px solid #e2e5e8;border-radius:7px;padding:6px 11px;font-size:11px;background:white}.filter-chip.active{background:var(--accent-soft);border-color:#ffcabd;color:#de5534}.filter-row .sort-button{margin-left:auto;font-size:11px;color:var(--secondary);display:flex;gap:3px;align-items:center}.catalog-list{display:grid;gap:12px;padding:0 16px 16px}.catalog-card{text-align:left;background:white;border-radius:16px;overflow:hidden;width:100%}.catalog-image{height:180px;background:#eef0f2;position:relative;overflow:hidden}.catalog-image img{width:100%;height:100%;object-fit:cover}.catalog-image .tag{position:absolute;left:12px;top:12px;background:#ffffffdf}.catalog-copy{padding:15px}.catalog-copy h2{font-size:18px;margin-bottom:6px}.catalog-copy .descriptor{font-size:12px;color:var(--secondary)}.catalog-card-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:12px}.catalog-card-bottom .availability{font-size:11px;color:var(--secondary)}.catalog-context{display:flex;justify-content:space-between;font-size:11px;color:var(--secondary);padding:0 16px 12px}.catalog-notice{font-size:12px;color:var(--secondary);line-height:1.7;padding:12px 16px;margin:0 16px 12px;background:#eeeef0;border-radius:10px}
+.detail-hero{position:relative;height:282px;background:#ececeb}.detail-hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 57%}.detail-hero:after{content:"";position:absolute;inset:0 0 auto;height:90px;background:linear-gradient(#ffffff95,transparent);pointer-events:none}.detail-hero .statusbar,.detail-hero .page-head{position:relative;z-index:2}.detail-body{padding:22px 24px 16px;background:white}.model-overview{display:flex;justify-content:space-between;align-items:center;gap:10px;padding-bottom:20px}.model-overview h1{font-size:26px;letter-spacing:-.6px;line-height:1.15;font-weight:650}.model-overview .model-edition{font-size:12px;color:var(--secondary);margin-top:8px;line-height:1.4}.model-overview .price{font-size:26px;text-align:right}.model-overview .price .unit{font-size:11px;display:block;margin-top:3px}.open-section{border-top:1px solid var(--line);padding:18px 0}.plan-line{display:flex;align-items:center;justify-content:space-between;width:100%;text-align:left}.plan-line h2{font-size:17px;font-weight:550;line-height:1.4;letter-spacing:.1px}.plan-line p{margin-top:7px;font-size:12px;color:var(--secondary)}.plan-line .icon{color:#a0a4ac;width:16px;height:16px}.included-line{font-size:12px;color:var(--secondary);line-height:1.75;padding:14px 0;border-top:1px solid var(--line)}.delivery-grid{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line);padding:17px 0}.delivery-cell{text-align:left;min-width:0}.delivery-cell+ .delivery-cell{border-left:1px solid var(--line);padding-left:17px}.delivery-cell small{font-size:11px;color:var(--secondary);display:block;margin-bottom:7px}.delivery-cell strong{font-size:14px;font-weight:500;display:block;white-space:nowrap}.delivery-cell span{font-size:10px;color:var(--muted);display:block;margin-top:5px}.deposit-line{border-top:1px solid var(--line);padding:15px 0;display:flex;gap:10px;align-items:center;font-size:11px;color:var(--secondary)}.deposit-line .tag{font-size:10px}.spec-section{border-top:1px solid var(--line);padding:17px 0 8px}.spec-section h2{font-size:14px;margin-bottom:15px;font-weight:600}.spec-grid{display:grid;grid-template-columns:repeat(3,1fr)}.spec-cell{padding:0 10px 14px 0;min-width:0}.spec-cell:nth-child(3n+2),.spec-cell:nth-child(3n+3){padding-left:14px;position:relative}.spec-cell:nth-child(3n+2):before,.spec-cell:nth-child(3n+3):before{content:"";position:absolute;left:0;top:1px;height:35px;width:1px;background:var(--line)}.spec-cell:nth-child(n+4){padding-top:14px;border-top:1px solid var(--line)}.spec-cell:nth-child(n+4):before{top:15px}.spec-cell small{display:block;font-size:10px;color:var(--secondary);margin-bottom:7px}.spec-cell strong{font-size:13px;font-weight:500}.fee-panel{background:#f5f6f8;border-radius:12px;padding:16px}.fee-panel h2{font-size:14px;margin-bottom:13px}.fee-columns{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:11px}.fee-columns>div+div{border-left:1px solid #e2e5e9;padding-left:18px}.fee-columns small{font-size:10px;color:var(--secondary);display:block;margin-bottom:6px}.fee-columns strong{font-size:21px;font-weight:600;letter-spacing:-.4px}.fee-panel p{font-size:10px;line-height:1.65;color:var(--secondary)}.fine-links{display:flex;justify-content:center;gap:20px;margin-top:14px}.fine-links button{font-size:11px;color:var(--secondary);min-height:32px}.purchase-bar{position:absolute;left:0;right:0;bottom:0;z-index:20;min-height:calc(76px + env(safe-area-inset-bottom,0px));padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:12px;background:#fffffffb;border-top:1px solid var(--line);backdrop-filter:blur(15px)}.bar-term{font-size:14px;white-space:nowrap;border-right:1px solid var(--line);padding-right:12px;line-height:1.5}.bar-term small,.bar-total small{display:block;font-size:10px;color:var(--secondary);margin-bottom:3px}.bar-total{flex:1;min-width:0}.bar-total .price{font-size:22px}.bar-total .currency{font-size:12px}.purchase-bar>.primary{width:130px;flex:none;border-radius:10px;font-size:14px}.purchase-bar.only-button>.primary{width:100%}
+.mini-car{display:flex;align-items:center;gap:14px}.mini-car img{width:100px;height:70px;border-radius:10px;object-fit:cover;background:#f2f3f4}.mini-car h2{font-size:16px;margin-bottom:6px}.mini-car p{font-size:11px;color:var(--secondary);line-height:1.7}.config-section{background:white;border-radius:16px;padding:18px}.config-section h2{font-size:15px;margin-bottom:5px}.config-section .hint{margin-bottom:15px}.options{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.option{border:1px solid #e5e7eb;border-radius:10px;padding:12px 4px;text-align:center;font-size:14px;min-height:68px}.option small{display:block;margin-top:7px;font-size:10px;color:var(--secondary);font-weight:400}.option.active{color:#dc5333;border-color:var(--accent);background:#fff7f3}.option.active small{color:#bb735e}.options.two{grid-template-columns:repeat(2,1fr)}.choice-row{display:flex;align-items:center;justify-content:space-between;text-align:left;width:100%;border:1px solid var(--line);border-radius:10px;padding:14px 12px;margin-top:8px;gap:10px}.choice-row h3{font-size:14px;font-weight:500}.choice-row p{font-size:10px;color:var(--secondary);line-height:1.7;margin-top:5px}.choice-row>span{font-size:12px;white-space:nowrap}.choice-row.active{border-color:var(--accent);background:#fff8f4}.choice-row.active>span{color:var(--accent)}.config-note{margin-top:12px;font-size:10px;color:var(--secondary);line-height:1.65}.confirm-intro{padding:18px 24px 22px}.confirm-intro .eyebrow{margin-bottom:8px}.confirm-intro h1{font-size:25px;font-weight:600;letter-spacing:-.5px}.confirm-intro p{font-size:12px;margin-top:8px;color:var(--secondary)}.confirm-main{padding:0 24px 20px}.confirm-main .mini-car{padding-bottom:20px}.confirm-main section+section{border-top:1px solid var(--line);padding-top:19px;margin-top:19px}.confirm-main h2{font-size:15px;margin-bottom:14px}.summary-pair{display:flex;justify-content:space-between;gap:15px;padding:8px 0;font-size:12px;line-height:1.5}.summary-pair>span{color:var(--secondary)}.summary-pair>b{text-align:right;font-weight:500}.summary-pair.strong{margin-top:7px;padding-top:14px;border-top:1px solid var(--line);font-size:14px}.summary-pair.strong b{color:var(--accent);font-size:18px}.summary-pair.strong span{color:var(--ink)}.agreement{display:flex;align-items:flex-start;gap:8px;line-height:1.8;font-size:10px;color:var(--secondary);margin-top:18px}.agreement input{width:16px;height:16px;accent-color:var(--accent);flex:none;margin:2px 0 0;cursor:pointer}.agreement button{color:#656b75;text-decoration:underline;text-underline-offset:3px}.confirm-amount{padding:17px;background:#f5f6f8;border-radius:12px;margin-top:20px}.confirm-amount p{font-size:11px;color:var(--secondary);margin-bottom:8px}.confirm-amount strong{font-size:28px;letter-spacing:-.5px;font-weight:600}.confirm-amount small{font-size:11px;margin-left:5px;color:var(--secondary)}
+.profile-card{display:flex;align-items:center;gap:15px;padding:24px 18px;background:white;border-radius:18px;width:100%;text-align:left}.avatar{position:relative;flex:none;width:56px;height:56px;border-radius:50%;background:#f4f5f6;overflow:hidden}.avatar:before{content:"";position:absolute;width:17px;height:19px;border-radius:50%;background:#b7b9bd;left:20px;top:10px}.avatar:after{content:"";position:absolute;width:35px;height:24px;border-radius:50% 50% 30% 30%;background:#b7b9bd;left:11px;top:32px}.profile-info{flex:1}.profile-info h2{font-size:20px;margin-bottom:7px;letter-spacing:-.3px}.profile-info .tag{font-size:10px}.profile-info p{font-size:11px;color:var(--secondary);margin-top:8px}.profile-card>.icon{width:16px;height:16px;color:#8f949d}.mine-orders .section-heading{margin-bottom:21px}.mine-grid{display:grid;grid-template-columns:repeat(4,1fr)}.mine-entry{display:flex;flex-direction:column;align-items:center;gap:8px;font-size:11px;color:var(--secondary);position:relative}.mine-entry .icon{width:22px;height:22px;color:var(--ink)}.mine-entry+.mine-entry:before{content:"";position:absolute;left:0;top:3px;bottom:2px;width:1px;background:var(--line)}.subscription-summary{background:white;border-radius:18px;padding:12px 14px 0}.subscription-summary .mini-car img{width:121px;height:92px}.subscription-summary .mini-car{gap:12px}.subscription-summary h2{font-size:13px;line-height:1.4}.subscription-summary .summary-state{display:flex;align-items:center;gap:7px;margin-bottom:12px;justify-content:space-between}.subscription-facts{display:grid;grid-template-columns:1fr 1fr;gap:8px}.subscription-facts>div+div{border-left:1px solid var(--line);padding-left:9px}.subscription-facts small{font-size:10px;color:var(--secondary);display:block;margin-bottom:5px}.subscription-facts strong{font-size:14px}.subscription-summary>.text-button{border-top:1px solid var(--line);width:100%;margin-top:12px;padding:12px 0;text-align:left;justify-content:flex-start;font-size:12px}.menu-card{padding:0 18px}.menu-row{display:flex;align-items:center;gap:13px;width:100%;height:53px;border-bottom:1px solid var(--line);font-size:13px;text-align:left}.menu-row:last-child{border-bottom:0}.menu-row>.icon:first-child{width:21px;height:21px}.menu-row>span{flex:1}.menu-row>.small{color:#8d929c;width:16px;height:16px}.mine-footer{text-align:center;font-size:10px;color:var(--muted);padding:7px 0 4px}
+.order-tabs{display:flex;justify-content:space-between;margin:0 0 15px;border-bottom:1px solid var(--line)}.order-tabs button{font-size:12px;padding:0 4px 13px;color:var(--secondary);position:relative}.order-tabs button.active{color:var(--ink);font-weight:600}.order-tabs button.active:after{content:"";height:2px;background:var(--accent);position:absolute;bottom:-1px;left:4px;right:4px}.order-card{padding:16px;background:white;border-radius:16px;margin-bottom:12px}.order-top{display:flex;justify-content:space-between;align-items:center;font-size:10px;color:var(--secondary);margin-bottom:17px}.order-top .order-status{color:#d96141;font-size:11px}.order-card .mini-car img{width:112px;height:82px}.order-card .mini-car h2{font-size:15px}.order-card .price{font-size:19px;margin-top:5px}.order-actions{display:flex;justify-content:flex-end;gap:9px;border-top:1px solid var(--line);margin-top:16px;padding-top:13px}.order-actions .secondary{min-height:32px;font-size:11px;padding:0 12px;border-radius:8px}.order-actions .primary{min-height:32px;width:auto;font-size:11px;padding:0 13px;border-radius:8px}.empty{padding:65px 15px;text-align:center}.empty>.icon{width:32px;height:32px;color:#b4b8c0;margin-bottom:18px}.empty h2{font-size:17px;margin-bottom:9px}.empty p{font-size:12px;color:var(--secondary);line-height:1.75;margin-bottom:23px}.empty .secondary{display:inline-flex}.status-copy{padding:13px 7px 12px}.status-copy h2{font-size:24px;letter-spacing:-.5px;margin-bottom:9px}.status-copy p{font-size:12px;color:var(--secondary);line-height:1.6}.timeline{padding-top:4px}.timeline-step{position:relative;padding:0 0 24px 24px}.timeline-step:before{content:"";position:absolute;left:1px;top:5px;width:8px;height:8px;border-radius:50%;border:1px solid #c9cdd3;background:white;z-index:1}.timeline-step.done:before{background:var(--accent);border-color:var(--accent)}.timeline-step:after{content:"";position:absolute;left:5px;top:13px;bottom:0;width:1px;background:var(--line)}.timeline-step:last-child{padding-bottom:0}.timeline-step:last-child:after{display:none}.timeline-step h3{font-size:13px;font-weight:500}.timeline-step p{font-size:10px;color:var(--secondary);margin-top:6px}.service-list{display:grid;grid-template-columns:1fr 1fr;gap:0}.service-list button{padding:14px 0;text-align:left;border-top:1px solid var(--line)}.service-list button:nth-child(2n){padding-left:17px}.service-list strong{font-size:13px;font-weight:500;display:block;margin-bottom:6px}.service-list small{font-size:10px;color:var(--secondary)}.mileage-meter{height:4px;border-radius:3px;background:#eef0f2;margin:17px 0 8px;overflow:hidden}.mileage-meter>div{height:100%;width:8%;background:var(--accent);border-radius:3px}.service-record{padding:13px 0;border-top:1px solid var(--line)}.service-record b{font-size:12px}.service-record p{font-size:11px;margin-top:5px;color:var(--secondary)}
+.sheet-mask{position:absolute;inset:0;background:#15182055;z-index:50;display:flex;align-items:flex-end;animation:fade .18s ease}.sheet{background:white;border-radius:22px 22px 0 0;width:100%;max-height:87%;overflow:auto;padding:10px 22px calc(24px + env(safe-area-inset-bottom,0px));overscroll-behavior:contain;animation:slide-up .22s ease}.sheet-handle{height:4px;width:30px;background:#dedfe3;border-radius:4px;margin:0 auto 16px}.sheet-head{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:19px}.sheet-head h2{font-size:18px;font-weight:600}.sheet-head .icon-button{height:28px;width:28px}.sheet-head .icon{width:19px;height:19px}.sheet-text{font-size:13px;color:var(--secondary);line-height:1.8;margin-bottom:20px}.sheet-choice{display:flex;justify-content:space-between;align-items:center;min-height:51px;width:100%;text-align:left;border-bottom:1px solid var(--line);font-size:14px;gap:15px}.sheet-choice span:last-child{font-size:11px;color:var(--secondary)}.sheet-choice.active{color:var(--accent)}.sheet-choice.active .icon{width:17px;height:17px}.sheet-section{margin:0 0 20px}.sheet-section h3{font-size:14px;margin-bottom:8px}.sheet-section p{font-size:12px;line-height:1.8;color:var(--secondary)}.sheet-note{font-size:10px;line-height:1.7;color:var(--secondary);padding:11px 0 16px}.field{display:block;margin-bottom:16px;font-size:12px;color:var(--secondary)}.field input,.field textarea,.field select{display:block;width:100%;background:#f5f6f8;border:1px solid #e9ebee;border-radius:10px;padding:12px;margin-top:8px;font-size:14px;color:var(--ink)}.field textarea{resize:none;min-height:85px}.sheet-actions{display:flex;gap:10px;margin-top:15px}.sheet-actions>*{flex:1}.success-mark{width:44px;height:44px;border:1.5px solid #7ea795;border-radius:50%;display:grid;place-items:center;margin:2px 0 20px;color:var(--green)}.success-mark .icon{width:23px;height:23px}.success-title{font-size:24px;margin-bottom:9px;font-weight:600}.success-copy{font-size:12px;line-height:1.8;color:var(--secondary);margin-bottom:24px}.auth-status{display:flex;justify-content:space-between;align-items:center;padding:15px 0;border-bottom:1px solid var(--line);font-size:13px}.auth-status span{font-size:11px;color:var(--secondary)}.amount-due{font-size:32px;font-weight:600;letter-spacing:-.5px;margin:8px 0 18px}.sheet .fee-panel{margin-bottom:20px}.support-number{font-size:26px;font-weight:500;letter-spacing:1px;margin:6px 0 8px}.faq-item{padding:14px 0;border-top:1px solid var(--line)}.faq-item h3{font-size:13px;margin-bottom:7px}.faq-item p{font-size:12px;color:var(--secondary);line-height:1.8}#toast{pointer-events:none;position:absolute;z-index:80;left:50%;bottom:100px;transform:translateX(-50%);max-width:82%;padding:11px 17px;background:#25272bed;color:white;font-size:12px;line-height:1.5;border-radius:10px;opacity:0;transition:opacity .15s;text-align:center}#toast.show{opacity:1}.loading{opacity:.6;pointer-events:none}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.deposit-line{width:100%;text-align:left}
+.delivery-cell strong{overflow:hidden;text-overflow:ellipsis}
+.profile-card{padding-top:18px;padding-bottom:18px}
+.mine-orders .section-heading{margin-bottom:16px}
+.subscription-summary .mini-car img{height:82px}
+.menu-row{height:50px}
+@keyframes slide-up{from{transform:translateY(100%)}to{transform:translateY(0)}}@keyframes fade{from{opacity:0}to{opacity:1}}
+/* Fixed logical phone viewport. Desktop previews scale both axes together. */
+.stage{height:100dvh;min-height:0;padding:14px 16px;gap:0}
+.device-viewport{position:relative;width:calc(390px * var(--preview-scale,1));height:calc(844px * var(--preview-scale,1));flex-shrink:0}
+.phone{position:absolute;left:0;top:0;width:390px;height:844px;min-height:0;transform:scale(var(--preview-scale,1));transform-origin:top left}
+.preview-label{width:calc(390px * var(--preview-scale,1));letter-spacing:0;font-size:10px;margin-bottom:10px}
+.preview-foot{margin-top:10px;font-size:9px}
+/* Light editorial home: image first, small controls, restrained service icons. */
+.home-immersive{height:242px;position:relative;background:#faf5f0}
+.home-visual{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center bottom}
+.home-immersive:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#ffffff32,transparent 60%);pointer-events:none}
+.home-head{position:relative;z-index:2;height:48px;padding:0 17px}
+.home-head .brand{font-size:21px;letter-spacing:-.7px}
+.home-brand-group{gap:11px}
+.home-head .city-button{border-left:1px solid #a3a3a380;padding-left:11px;font-size:13px}
+.home-head .icon-button .icon{width:22px;height:22px}
+.home-title{position:absolute;z-index:2;top:105px;left:18px}
+.home-title h1{font-size:29px;letter-spacing:-.8px;line-height:1.2;font-weight:650}
+.home-title p{font-size:12px;color:#54565c;margin-top:8px;letter-spacing:.15px}
+.title-accent{display:block;width:21px;height:3px;background:var(--accent);border-radius:2px;margin-top:12px}
+.home-light{padding:0 14px 0}
+.booking-compact{margin-top:-14px;border-radius:16px;padding:0 13px 11px;box-shadow:0 10px 30px #c8cfd614}
+.booking-compact .mode-tabs{margin:0 -13px 0;border-radius:16px 16px 0 0;background:#f6f7f9}
+.booking-compact .mode-tabs button{height:44px;font-size:15px}
+.booking-compact .mode-tabs button.active:after{width:27px;left:calc(50% - 13.5px);bottom:2px}
+.booking-columns{display:grid;grid-template-columns:1fr 1.4fr 1fr;padding:14px 0 10px;align-items:center}
+.booking-column{text-align:left;min-width:0;padding:0 10px}
+.booking-column:first-child{padding-left:0}
+.booking-column:last-child{padding-right:0;padding-left:14px}
+.booking-column+.booking-column{border-left:1px solid var(--line)}
+.booking-column>span{font-size:11px;color:#818692;display:block;margin-bottom:8px}
+.booking-column strong{font-size:20px;letter-spacing:-.4px;font-weight:600;white-space:nowrap;display:flex;align-items:center;gap:5px}
+.booking-column .icon{width:13px;height:13px;color:#858a94;stroke-width:1.6}
+.booking-compact>.primary{height:44px;min-height:44px;border-radius:13px;margin-top:0;font-size:16px;font-weight:500;background:#ff6137}
+.booking-compact .trust-line{display:flex;align-items:center;justify-content:center;gap:5px;width:100%;font-size:11px;margin-top:10px;min-height:18px;color:#5f6470}
+.trust-line .icon{width:14px;height:14px}
+.popular-section{margin-top:12px}
+.popular-section .section-heading{margin-bottom:10px;padding:0 2px}
+.popular-section .section-heading h2{font-size:17px}
+.popular-section .section-heading button{font-size:11px}
+.popular-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.popular-card{background:white;border-radius:10px;overflow:hidden;text-align:left;min-width:0;width:100%}
+.popular-photo{height:90px;background:#ececeb;overflow:hidden}
+.popular-photo img{width:100%;height:100%;object-fit:cover;object-position:center 61%}
+.popular-copy{padding:8px 10px 9px}
+.popular-copy h3{font-size:13px;font-weight:550;white-space:nowrap;letter-spacing:-.2px}
+.popular-copy>p{font-size:10px;color:var(--secondary);margin-top:5px}
+.popular-copy .pill-row{margin:8px 0 5px;gap:4px}
+.popular-copy .tag{font-size:9px;padding:2px 5px}
+.popular-copy .price{font-size:21px;letter-spacing:-.5px}
+.popular-copy .price .currency{font-size:11px}
+.popular-copy .price .unit{font-size:10px}
+.home-services{display:grid;grid-template-columns:repeat(4,1fr);background:white;border-radius:13px;margin-top:10px;padding:10px 0}
+.home-services button{display:flex;flex-direction:column;align-items:center;gap:5px;position:relative}
+.home-services button+button:before{content:"";position:absolute;left:0;top:4px;bottom:1px;width:1px;background:var(--line)}
+.home-services .icon{width:21px;height:21px;stroke-width:1.65;margin-bottom:1px}
+.home-services b{font-size:11px;font-weight:500}
+.home-services span{font-size:9px;color:#8c919a}
+/* Full-page city picker with search and alphabetical navigation. */
+.screen.city-page{padding-bottom:24px}
+.picker-sticky{position:sticky;top:0;background:#fff;z-index:8}
+.city-search-head{display:flex;align-items:center;gap:5px;padding:10px 17px 14px 8px;border-bottom:1px solid #f3f4f5}
+.city-search-head .icon-button{width:37px;flex:none}
+.city-search-field{height:39px;background:#f6f7f8;border-radius:24px;display:flex;align-items:center;padding:0 14px;gap:8px;flex:1;min-width:0}
+.city-search-field .icon{width:18px;height:18px;color:#a1a5aa}
+.city-search-field input{width:100%;background:transparent;border:0;outline:0;font-size:13px;padding:0;color:var(--ink)}
+.city-search-field input::placeholder{color:#a1a5aa}
+.city-content{padding:23px 20px 12px}
+.city-content h2{font-size:14px;font-weight:600;margin-bottom:15px}
+.city-section-title{display:flex;align-items:center;justify-content:space-between}
+.city-section-title h2{margin-bottom:0}
+.city-section-title>button{font-size:11px;color:var(--secondary);display:flex;align-items:center;gap:4px;min-height:28px}
+.city-section-title .icon{width:14px;height:14px}
+.located-city{display:flex;align-items:center;gap:7px;margin-top:9px;min-height:32px}
+.located-city .icon{width:19px;height:19px}
+.located-city strong{font-size:17px;font-weight:600}
+.located-city small{font-size:10px;color:#a0a4ab;margin-left:4px}
+.recent-cities{margin-top:26px}
+.city-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.city-tile{height:35px;background:#f7f7f8;border-radius:5px;font-size:13px;color:#62666c;white-space:nowrap}
+.city-tile.selected{color:#e75834;background:#fff2ec}
+.city-index{margin-top:29px}
+.alphabet-grid{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:8px}
+.alphabet-grid button{height:34px;font-size:14px;background:#f7f7f8;border-radius:3px}
+.city-groups{margin-top:29px}
+.city-group{margin-top:22px;scroll-margin-top:108px}
+.city-group h3{font-size:15px;font-weight:500;margin-bottom:11px}
+.city-result{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:53px;border-bottom:1px solid var(--line);font-size:14px}
+.city-result .icon{color:#9da1a8}
+.city-empty{text-align:center;padding:70px 0;color:var(--secondary);font-size:14px}
+.city-empty span{font-size:12px;display:block;margin:10px 0 18px;color:#9ca0a7}
+.city-empty button{font-size:12px;color:var(--accent);padding:10px}
+.city-demo-note{font-size:10px;color:#a1a5ac;text-align:center;margin-top:35px}
+/* Full-page subscription calendar. Date and time stay draft until confirmed. */
+.screen.calendar-page{padding-bottom:calc(240px + env(safe-area-inset-bottom,0px))}
+.calendar-week{display:grid;grid-template-columns:repeat(7,1fr);padding:12px 14px 14px;font-size:13px;text-align:center;border-bottom:1px solid var(--line);color:#626771}
+.calendar-hint{font-size:10px;color:#90949b;padding:12px 18px;background:white}
+.calendar-month h2{font-size:15px;font-weight:550;background:#f7f8f9;padding:12px 18px}
+.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));padding:7px 14px 13px;gap:3px 0}
+.calendar-day{height:51px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border-radius:8px;font-size:15px;font-weight:500}
+.calendar-day small{height:12px;font-size:9px;font-weight:400;line-height:12px}
+.calendar-day:disabled{color:#c4c7cc;opacity:1}
+.calendar-day.selected{background:var(--accent);color:white}
+.calendar-more{display:flex;align-items:center;justify-content:center;gap:5px;min-height:48px;width:100%;font-size:12px;color:var(--secondary)}
+.calendar-footer{position:absolute;bottom:0;left:0;right:0;background:#fff;z-index:20;border-top:1px solid var(--line);padding:15px 18px calc(17px + env(safe-area-inset-bottom,0px));box-shadow:0 -5px 22px #24334c04}
+.time-title{display:flex;align-items:center;justify-content:space-between}
+.time-title h2{font-size:14px;font-weight:600}
+.time-title>span{font-size:10px;color:#a0a4ab}
+.time-picker{position:relative;display:grid;grid-template-columns:1fr 20px 1fr;height:96px;margin:7px 0 11px;align-items:center;padding:0 40px}
+.time-highlight{position:absolute;inset:32px 0;height:32px;background:#fff3ed;border-radius:6px;pointer-events:none}
+.time-colon{position:relative;text-align:center;font-size:18px;color:#9b8176}
+.time-wheel{position:relative;height:96px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:none;scroll-snap-type:y mandatory;padding:32px 0;mask-image:linear-gradient(transparent,#000 28%,#000 72%,transparent)}
+.time-wheel::-webkit-scrollbar{display:none}
+.time-option{display:block;width:100%;height:32px;min-height:32px;font-size:19px;line-height:32px;font-variant-numeric:tabular-nums;color:#a4a7ad;scroll-snap-align:center;transition:color .12s}
+.time-option.active{color:#27272b;font-weight:550}
+.calendar-confirm{display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid #f2f3f5;padding-top:13px}
+#date-summary{min-width:0}
+#date-summary strong{font-size:14px;font-weight:550;display:block;white-space:nowrap}
+#date-summary span{display:block;font-size:10px;color:#9398a1;margin-top:6px;white-space:nowrap}
+.calendar-confirm .primary{width:141px;height:43px;min-height:43px;font-size:14px;border-radius:10px;flex:none;font-weight:500}
+@media(max-width:540px) and (pointer:coarse){body{background:var(--bg)}.stage{padding:0;display:block;height:100dvh;min-height:100dvh}.preview-label,.preview-foot{display:none}.device-viewport{width:100%;height:100dvh}.phone{position:relative;width:100%;height:100dvh;min-height:0;border-radius:0;box-shadow:none;transform:none}.screen{padding-bottom:calc(88px + env(safe-area-inset-bottom,0px))}.screen.city-page{padding-bottom:24px}.screen.calendar-page{padding-bottom:calc(240px + env(safe-area-inset-bottom,0px))}.detail-hero{height:calc(100vw * .72);min-height:260px;max-height:330px}.home-immersive{height:calc(100vw * .6205)}}
+@media(max-width:370px){.vehicle-row{grid-template-columns:116px 1fr;gap:9px}.vehicle-thumb{height:98px}.vehicle-row h3{font-size:14px}.detail-body{padding-left:20px;padding-right:20px}.model-overview h1{font-size:24px}.model-overview .price{font-size:24px}.purchase-bar{gap:9px;padding-left:13px;padding-right:13px}.purchase-bar>.primary{width:114px}.bar-total .price{font-size:20px}.bar-term{padding-right:9px;font-size:13px}.subscription-summary .mini-car img{width:103px}.banner-copy h1{font-size:20px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* Shared action sizing: labels and card actions use the same readable scale. */
+:root{--action-font:14px;--action-height:40px;--action-radius:10px}
+.primary,.secondary{font-size:var(--action-font)}
+.secondary{font-weight:500;min-height:var(--action-height);border-radius:var(--action-radius)}
+.order-actions{gap:10px;padding-top:14px}
+.order-actions .primary,.order-actions .secondary{font-size:var(--action-font);min-height:var(--action-height);padding:0 16px;border-radius:var(--action-radius);font-weight:500}
+.order-tabs button{font-size:13px;min-height:40px}
+.purchase-bar>.primary{font-size:var(--action-font)}
+.booking-compact>.primary{font-size:16px}
+/* Home continues below the first screen with a full, browsable vehicle list. */
+.home-popular{margin-top:19px}
+.home-popular .section-heading{align-items:center;margin-bottom:13px}
+.home-popular .section-heading p{font-size:11px;line-height:1.6;color:#969ba3;margin-top:5px}
+.home-vehicle-list{background:white;border-radius:14px;padding:0 12px;overflow:hidden}
+.home-vehicle-row{display:grid;grid-template-columns:46% minmax(0,1fr);align-items:stretch;gap:13px;padding:17px 0}
+.home-vehicle-row+.home-vehicle-row{border-top:1px solid #f0f1f3}
+.home-vehicle-photo{min-height:132px;aspect-ratio:1;border-radius:9px;position:relative;overflow:hidden;background:#f1f2f3;align-self:stretch}
+.home-vehicle-photo img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:center;padding:0}
+.home-vehicle-photo>span{position:absolute;bottom:6px;left:7px;font-size:9px;padding:3px 5px;border-radius:4px;background:#ffffffe8;color:#626873;backdrop-filter:blur(4px)}
+.home-vehicle-copy{min-width:0;display:flex;flex-direction:column}
+.home-car-title{display:block;text-align:left;min-height:25px;width:100%}
+.home-car-title h3{font-size:15px;font-weight:600;line-height:1.4;white-space:nowrap;letter-spacing:-.2px}
+.home-car-spec{font-size:11px;color:#848993;line-height:1.6;margin:2px 0 7px;white-space:nowrap}
+.home-vehicle-copy .pill-row{gap:5px;flex-wrap:nowrap}
+.home-vehicle-copy .tag{font-size:9px;padding:3px 5px;border-radius:4px;color:#777f89}
+.home-car-price{display:flex;width:100%;align-items:baseline;justify-content:flex-start;margin-top:8px;min-height:29px;text-align:left}
+.home-car-price .price{font-size:22px;font-weight:600;letter-spacing:-.5px}
+.home-car-price .unit{font-size:10px;margin-left:2px}
+.home-car-price .currency{font-size:11px}
+.home-car-terms{display:flex;gap:5px;margin-top:auto;padding-top:6px}
+.home-car-terms button{min-height:28px;padding:0 9px;border-radius:6px;font-size:10px;line-height:28px;background:#f5f6f8;color:#9399a2;white-space:nowrap}
+.home-car-terms button.active{color:#e15a39;background:#fff0e9;font-weight:500}
+.home-results-link{display:flex;align-items:center;justify-content:center;gap:3px;width:100%;font-size:12px;color:#737983;min-height:46px;margin:2px 0 2px}
+.home-results-link .icon{width:14px;height:14px}
+.home-services{margin-top:0;padding:15px 0}
+.home-guides{margin-top:14px;background:white;border-radius:14px;padding:17px 16px 5px}
+.home-guides .section-heading{margin-bottom:7px}
+.home-guides h2{font-size:15px;font-weight:600}
+.home-guide-row{display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:left;min-height:65px;width:100%;border-bottom:1px solid var(--line)}
+.home-guide-row:last-child{border-bottom:0}
+.home-guide-row strong{font-size:12px;font-weight:500;display:block}
+.home-guide-row small{font-size:10px;color:#969ba3;display:block;margin-top:6px}
+.home-guide-row .icon{color:#a0a5ac;width:14px;height:14px}
+.home-demo-note{font-size:10px;color:#a2a7af;text-align:center;padding:22px 0 4px}
+/* Query results are a separate navigation level from the unrestricted catalog. */
+.screen.results-page{padding-bottom:24px}
+.results-sticky{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid #f0f1f3}
+.results-query-head{display:flex;align-items:center;padding:9px 14px 12px 5px;gap:3px}
+.results-query-head>.icon-button{flex:none;width:34px}
+.query-box{flex:1;min-width:0;display:grid;grid-template-columns:.9fr 1.25fr .85fr;background:#f6f7f8;border-radius:10px;padding:11px 0}
+.query-box button{min-width:0;padding:0 12px;text-align:left}
+.query-box button+button{border-left:1px solid #e5e7eb}
+.query-box small{display:block;font-size:10px;color:#9a9fa7;margin-bottom:6px}
+.query-box strong{display:flex;align-items:center;gap:3px;white-space:nowrap;font-size:13px;font-weight:600;letter-spacing:-.2px}
+.query-box .icon{width:12px;height:12px;color:#a0a5ad}
+.results-tools{padding:0 16px 13px}
+.results-tools .search-field{height:36px;background:#fafbfc;border-color:#f0f1f3;border-radius:8px}
+.results-tools .filter-row{padding-top:11px}
+.results-caption{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:16px 16px 0}
+.results-caption>span{font-size:14px;font-weight:600}
+.results-caption small{font-size:10px;color:#9399a2;white-space:nowrap}
+.catalog-summary{display:flex;align-items:center;justify-content:space-between;padding:10px 16px 13px;gap:10px}
+.catalog-summary>span{font-size:12px;color:#727984;white-space:nowrap}
+.catalog-summary b{color:#363b43;font-size:13px;font-weight:500}
+.catalog-summary small{font-size:10px;color:#a0a5ae;text-align:right}
+.catalog-footnote{font-size:10px;color:#a0a5ae;line-height:1.7;text-align:center;padding:5px 20px 20px}
+.empty-actions{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px}
+.empty-actions .secondary{min-width:156px}
+@media(max-width:370px){.home-vehicle-row{gap:10px}.home-vehicle-copy .tag{font-size:9px;padding:3px 4px}.query-box button{padding-left:9px;padding-right:7px}.query-box strong{font-size:12px}.results-caption small{font-size:9px}}
+
+/* Business review V2 — new-car-first discovery and fixed-package subscription. */
+.brand-caption{font-size:10px;color:#777b82;border-left:1px solid #c8c9cb;padding-left:10px;letter-spacing:1px}
+.home-title h1{font-size:27px}
+.subscription-entries{display:grid;grid-template-columns:1fr 1fr;gap:10px;position:relative;margin-top:-8px;margin-bottom:25px;z-index:2}
+.subscription-entry{position:relative;overflow:hidden;border:1px solid #fff;border-radius:16px;text-align:left;min-height:202px;background:#f0efee;box-shadow:0 5px 16px #67738208}
+.subscription-entry>div{position:relative;z-index:2;padding:17px 14px 0}
+.entry-kicker{font-size:9px;letter-spacing:.5px;color:#8b817b}
+.subscription-entry h2{font-size:21px;letter-spacing:-.5px;margin:5px 0 6px}
+.subscription-entry p{font-size:10px;color:#777a80;white-space:nowrap}
+.entry-new{background:linear-gradient(135deg,#fff3e9,#f7f1eb)}
+.entry-new .entry-kicker{color:#b46a42}
+.entry-stock{background:linear-gradient(135deg,#f7f8f9,#eaedef)}
+.entry-link{position:absolute;bottom:10px;left:14px;right:12px;display:flex;align-items:center;justify-content:space-between;font-size:11px;font-weight:500}
+.catalog-controls{padding-bottom:0;background:#fff}
+.catalog-controls .search-field{background:#f5f6f8;border:0}
+.catalog-modes{margin-top:15px;gap:25px;padding-bottom:0}
+.catalog-modes button{padding-bottom:13px}
+.catalog-notice{border-radius:0;background:#fff8f3;margin:0;padding:10px 16px;font-size:10px;color:#957058}
+.brand-catalog{display:grid;grid-template-columns:76px minmax(0,1fr);align-items:start;background:#f5f6f8;min-height:520px}
+.brand-rail{position:sticky;top:98px;display:flex;flex-direction:column;padding:10px 0;background:#f3f4f6}
+.brand-rail button{min-height:58px;position:relative;font-size:12px;color:#70757c;padding:8px 3px}
+.brand-rail button.active{background:#fff;color:var(--ink);font-weight:600}
+.brand-rail button.active:before{content:'';position:absolute;width:3px;height:18px;left:0;top:20px;background:var(--accent);border-radius:0 2px 2px 0}
+.brand-results{min-width:0;background:#fff;min-height:520px}
+.brand-results .catalog-summary{padding:16px 12px 12px;font-size:11px;gap:6px}
+.sort-button{display:flex;align-items:center;gap:3px;font-size:10px;color:var(--secondary);min-height:24px}
+.sort-button .icon{width:12px;height:12px}
+.brand-results .catalog-list{display:grid;padding:0 12px 8px;gap:18px}
+.brand-results .catalog-card{border-radius:0;background:white;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.brand-results .catalog-image{height:auto;aspect-ratio:1.65;border-radius:0;background:transparent}
+.brand-results .catalog-image img{position:absolute;inset:0;display:block;object-position:center}
+.brand-results .catalog-image .tag{top:9px;left:9px;font-size:9px}
+.brand-results .catalog-copy{padding:12px 0 0}
+.brand-results .catalog-copy h2{font-size:17px;margin-bottom:6px}
+.brand-results .catalog-copy .descriptor{font-size:10px;line-height:1.6}
+.brand-results .catalog-card-bottom{margin-top:9px;gap:4px;align-items:baseline}
+.brand-results .catalog-card-bottom .price{font-size:23px}
+.brand-results .catalog-card-bottom .availability{font-size:9px;white-space:nowrap}
+.brand-results .catalog-card-bottom .unit{font-size:10px}
+.brand-results .catalog-footnote{font-size:9px;line-height:1.7;padding:8px 12px 20px}
+.brand-results .empty{padding:50px 10px}
+.brand-results .empty h2{font-size:15px}
+.stock-conditions{padding:12px 16px 10px;background:#fff;border-bottom:1px solid var(--line)}
+.stock-conditions .query-box{width:100%;min-height:58px}
+.stock-conditions>.text-button{width:100%;justify-content:flex-end;font-size:11px;min-height:30px;margin-top:5px}
+.results-tools{background:#fff;padding:10px 16px}
+.detail-body{padding-left:20px;padding-right:20px}
+.model-overview h1{font-size:24px}
+.model-overview .price{font-size:25px}
+.section-step{display:block;color:#8a8e95;letter-spacing:1px;font-size:10px;margin-bottom:10px}
+.package-section{padding:19px 0 20px;border-top:1px solid var(--line)}
+.package-heading{display:flex;align-items:center;justify-content:space-between;gap:7px}
+.package-heading h2{font-size:16px;letter-spacing:-.3px;line-height:1.5;font-weight:600}
+.package-heading .tag{font-size:9px;background:#f4f5f6;flex:none;padding:4px 6px}
+.package-intro{font-size:11px;color:var(--secondary);margin-top:7px}
+.package-options{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:18px}
+.package-option{position:relative;border:1px solid #e6e7e9;border-radius:12px;text-align:left;padding:15px 12px;min-width:0;background:#fff}
+.package-option.active{border-color:#ff815e;background:#fff8f4}
+.package-option>strong{display:block;font-size:14px;padding-right:14px;font-weight:600}
+.package-option>small{display:block;font-size:10px;margin-top:7px;color:var(--secondary)}
+.package-radio{position:absolute;top:16px;right:10px;width:12px;height:12px;border:1px solid #d5d7db;border-radius:50%}
+.package-option.active .package-radio{border:4px solid var(--accent);background:white}
+.package-cost{display:block;font-size:20px;letter-spacing:-.3px;font-weight:600;margin-top:17px}
+.package-cost small{font-size:10px;color:var(--secondary);font-weight:400;letter-spacing:0;margin-left:3px}
+.package-specs{display:grid;grid-template-columns:1fr 1fr 1fr;padding:18px 0 13px;gap:8px}
+.package-specs>span{font-size:12px;line-height:1.5}
+.package-specs small{display:block;color:var(--secondary);font-size:10px;margin-bottom:5px}
+.package-features{font-size:11px;color:#70757c;line-height:1.8;padding-bottom:15px}
+.package-delivery{background:#f6f7f8;padding:12px;border-radius:9px;display:flex;justify-content:space-between;align-items:center;gap:6px}
+.package-delivery>span{font-size:11px;white-space:nowrap}
+.package-delivery b{font-weight:500;margin-left:4px}
+.package-delivery>small{font-size:9px;color:var(--secondary)}
+.demo-disclaimer{font-size:9px;line-height:1.7;color:#969aa2;margin-top:10px}
+.editable-pair{display:flex;justify-content:space-between;align-items:center;text-align:left;gap:12px;width:100%;min-height:44px;font-size:12px}
+.editable-pair>span{color:var(--secondary);flex:none}
+.editable-pair b{font-weight:500;display:flex;align-items:center;gap:4px;text-align:right;line-height:1.6}
+.editable-pair .icon{width:14px;height:14px;color:#999da5}
+.confirm-main .mini-car>div{min-width:0}
+.confirm-intro h1{font-size:24px}
+.confirm-intro>p{line-height:1.7}
+.info-heading{font-size:15px;margin-bottom:12px}
+.order-summary-link{width:100%;text-align:left}
+.order-price{text-align:right;margin-top:5px}
+.order-bill-hint{background:#f7f8f9;padding:9px 10px;border-radius:7px;font-size:10px;color:var(--secondary);margin-top:11px}
+.order-tabs{gap:5px}
+.order-tabs button{font-size:12px;padding-left:2px;padding-right:2px;white-space:nowrap}
+.status-copy .eyebrow{font-size:10px;letter-spacing:1px;margin-bottom:9px}
+.status-copy h2{font-size:23px}
+.progress-track{list-style:none;margin:20px -9px 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr)}
+.progress-track li{position:relative;text-align:center;min-width:0}
+.progress-track li:before{content:'';position:absolute;left:calc(-50% + 12px);right:calc(50% + 12px);top:12px;height:1px;background:#e8eaed}
+.progress-track li:first-child:before{display:none}
+.progress-track li>span{position:relative;z-index:1;width:24px;height:24px;display:grid;place-items:center;border-radius:50%;background:#f2f3f5;color:#a0a4aa;font-size:10px;margin:auto}
+.progress-track li.reached>span{background:var(--accent-soft);color:var(--accent)}
+.progress-track li.current>span{background:var(--accent);color:#fff}
+.progress-track li.reached:before{background:#ffd4c5}
+.progress-track li b{font-size:10px;font-weight:400;color:#9a9ea5;display:block;margin-top:10px;white-space:nowrap}
+.progress-track li.reached b{color:var(--ink)}
+.progress-description{font-size:11px;line-height:1.8;color:var(--secondary);padding:17px 0 0}
+.demo-progress-link{width:100%;font-size:11px;color:#8b8f97;display:flex;align-items:center;justify-content:space-between;border-top:1px dashed var(--line);min-height:40px;margin-top:16px;text-align:left}
+.next-bill{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:4px 0 18px}
+.next-bill small{font-size:11px;color:var(--secondary);display:block}
+.next-bill strong{font-size:28px;font-weight:600;letter-spacing:-.6px;display:block;margin:8px 0}
+.next-bill p{font-size:10px;color:var(--secondary)}
+.next-bill>.primary{width:auto;min-height:40px;font-size:14px;padding:0 15px;border-radius:10px}
+.debit-setting{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:15px 0 4px;border-top:1px solid var(--line);width:100%;text-align:left;font-size:13px}
+.debit-setting small{display:block;font-size:10px;color:var(--secondary);margin-top:7px}
+.debit-setting b{display:flex;gap:2px;align-items:center;white-space:nowrap;font-size:11px;font-weight:400;color:var(--secondary)}
+.debit-setting b .icon{width:13px;height:13px}
+.vehicle-identity{padding-bottom:15px}
+.vehicle-identity strong{font-size:14px;display:block}
+.vehicle-identity span{font-size:10px;color:var(--secondary);display:block;margin-top:7px}
+.vehicle-metrics{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.vehicle-metrics small{font-size:10px;color:var(--secondary);display:block;margin-bottom:8px}
+.vehicle-metrics strong{font-size:20px;font-weight:500;letter-spacing:-.4px}
+.vehicle-metrics em{font-size:9px;font-style:normal;color:var(--secondary);margin-left:3px;letter-spacing:0}
+.vehicle-service .service-list{margin-top:20px}
+.bill-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:15px 0;border-bottom:1px solid var(--line);font-size:13px}
+.bill-row>div:last-child{text-align:right;flex:none}
+.bill-row strong{font-size:12px;font-weight:500}
+.bill-row strong small{font-size:10px;color:var(--secondary);margin-left:8px;font-weight:400}
+.bill-row span{display:block;font-size:10px;color:var(--secondary);margin-top:7px}
+.bill-row .paid{color:var(--green)}
+.demo-bank-card{background:linear-gradient(120deg,#f4f1ed,#ecebe9);border:1px solid #e8e5e0;border-radius:14px;padding:20px;margin-bottom:22px}
+.demo-bank-card span{font-size:12px;display:block;color:#6f6c68}
+.demo-bank-card strong{display:block;font-size:20px;margin:19px 0;letter-spacing:2px;font-weight:500}
+.demo-bank-card small{font-size:10px;color:#8a8580}
+.debit-consent{display:flex;align-items:flex-start;gap:8px;font-size:11px;line-height:1.8;color:var(--secondary);margin-bottom:18px}
+.debit-consent input{accent-color:var(--accent);width:16px;height:16px;flex:none;margin:2px 0}
+.full-width{width:100%}.spaced{margin-top:10px}
+.summary-pair>span{flex-shrink:0;white-space:nowrap}
+.summary-pair>b{min-width:0;overflow-wrap:anywhere}
+/* Refined V2: quiet discovery, separate showroom, manufacturer-based choices. */
+.subscription-entries{margin-top:8px;gap:12px}
+.subscription-entry{min-height:0;border:1px solid #e0e4e9;box-shadow:0 4px 12px #17243708;border-radius:15px;background:#fff}
+.entry-new{background:linear-gradient(145deg,#e7edf2,#f3f5f7)}
+.entry-stock{background:linear-gradient(145deg,#fafbfc,#eef0f2)}
+.subscription-entry>div{padding:18px 14px 20px}
+.entry-new .entry-kicker,.entry-stock .entry-kicker{color:#747e89;font-size:9px;letter-spacing:.8px}
+.subscription-entry h2{font-size:20px;color:#171d25;margin:5px 0 7px}
+.subscription-entry p{font-size:11px;color:#68717c}
+.entry-link{position:static;margin:0;background:#ffffffed;border-top:1px solid #e0e4e9;min-height:40px;padding:0 14px;font-size:12px;color:#303945;font-weight:600}
+.entry-link .icon{width:15px;height:15px;color:#6c7682}
+.catalog-page-head{display:grid;grid-template-columns:90px 1fr 90px;align-items:center;height:48px;padding:0 16px;background:#fff}
+.catalog-page-head h1{font-size:16px;text-align:center;font-weight:600}
+.catalog-page-head .icon-button{justify-self:end}
+.catalog-page-head .city-button{justify-self:start;min-height:40px;font-size:13px}
+.catalog-image{display:block;width:100%}
+.brand-results .catalog-image img{object-fit:contain;padding:0}
+.catalog-copy{display:block;width:100%;text-align:left}
+.catalog-cta{display:flex;align-items:center;gap:1px;font-size:11px;white-space:nowrap;color:#5b626c}
+.catalog-cta .icon{width:13px;height:13px}
+.catalog-card-bottom .price{font-size:22px}
+.detail-hero{background:linear-gradient(180deg,#f8f9fa,#edf0f3);height:270px}
+.detail-photo{position:absolute;inset:68px 0 0;display:block;width:100%;height:202px}
+.detail-photo img{width:100%;height:100%;object-fit:contain;padding:0 13px 15px}
+.detail-photo>span{position:absolute;right:17px;bottom:12px;display:flex;align-items:center;gap:2px;font-size:10px;color:#646e7a;background:#ffffffdc;border-radius:12px;padding:5px 9px}
+.detail-photo>span .icon{width:12px;height:12px}
+.detail-body{padding-top:20px}
+.model-overview h1{font-size:23px;line-height:1.3}
+.model-overview .model-edition{font-size:11px}
+.reference-price{flex:none;text-align:right}
+.reference-price>small{font-size:10px;color:var(--secondary);display:block;margin-bottom:3px}
+.reference-price .price{font-size:24px}
+.reference-price .price .unit{display:inline;font-size:10px}
+.simple-heading{font-size:16px;font-weight:600;margin-bottom:16px;letter-spacing:0}
+.package-section{padding-top:20px;padding-bottom:16px}
+.trim-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.trim-card{border:1px solid #e2e5e9;padding:14px 10px;min-height:74px;border-radius:9px;text-align:left;background:#fff}
+.trim-card strong{display:block;font-size:12px;font-weight:500;line-height:1.6;overflow-wrap:anywhere}
+.trim-card small{font-size:10px;color:#858b94;display:block;line-height:1.5;margin-top:5px}
+.trim-card.active{border-color:#ed714f;background:#fffaf7}
+.trim-card.active strong{color:#d44d2c}
+.paint-heading{display:flex;justify-content:space-between;align-items:center;margin-top:23px;font-size:12px}
+.paint-heading b{font-weight:400;color:#757c86;font-size:11px}
+.paint-swatches{display:flex;gap:12px;padding:11px 0 16px;border-bottom:1px solid var(--line)}
+.paint-swatch{width:36px;height:36px;flex:none;padding:5px;border-radius:50%;border:1px solid transparent}
+.paint-swatch span{display:block;width:24px;height:24px;border-radius:50%;background:var(--paint);box-shadow:inset 0 0 0 1px #00000014,inset 0 2px 4px #ffffff25}
+.paint-swatch.active{border-color:#242a32}
+.configuration-row{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:48px;border-bottom:1px solid var(--line);text-align:left;font-size:12px}
+.configuration-row>span{flex:none}
+.configuration-row b{font-size:11px;font-weight:400;color:#747b86;display:flex;align-items:center;gap:6px;text-align:right}
+.configuration-row b .icon{width:13px;height:13px;color:#9ba1a9}
+.standard-features{color:#8a9099;font-size:10px;line-height:1.8;margin-top:15px}
+.open-section .simple-heading{margin-bottom:13px}
+.plan-line h2{font-size:16px}
+.delivery-cell strong{white-space:normal;line-height:1.6;font-size:13px;overflow-wrap:anywhere}
+.deposit-line>.icon{margin-left:auto;width:14px;height:14px}
+.equipment-page{padding:24px 22px}
+.equipment-page>h2{font-size:22px;font-weight:600}
+.equipment-trim{color:#757d87;font-size:12px;margin-top:8px;padding-bottom:24px}
+.equipment-list{border-top:1px solid var(--line)}
+.equipment-item{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:76px;border-bottom:1px solid var(--line);text-align:left;padding:15px 1px}
+.equipment-item strong{display:block;font-size:14px;font-weight:500}
+.equipment-item small{display:block;font-size:11px;color:#959ba3;margin-top:7px}
+.equipment-item:disabled{opacity:1;color:#9b9fa6}
+.equipment-check{width:19px;height:19px;border:1px solid #d8dce2;border-radius:5px;display:grid;place-items:center;flex:none}
+.equipment-item.active .equipment-check{background:var(--accent);border-color:var(--accent);color:white}
+.equipment-item:disabled .equipment-check{background:#f1f3f5;border-color:#e5e7eb;color:#a0a6ae}
+.option-price-note{font-size:11px;color:#939aa4;line-height:1.8;margin-top:20px}
+.showroom-gallery{background:#f4f5f7;padding-bottom:9px}
+.gallery-stage{position:relative;height:246px;display:grid;place-items:center;overflow:hidden}
+.gallery-stage>img{height:100%;width:100%;object-fit:contain;padding:12px}
+.gallery-arrow{position:absolute;top:calc(50% - 17px);width:32px;height:34px;border-radius:50%;background:#ffffffc4;display:grid;place-items:center;color:#7c838c}
+.gallery-arrow .icon{width:17px;height:17px}
+.gallery-arrow.prev{left:10px}.gallery-arrow.next{right:10px}
+.gallery-count{position:absolute;bottom:9px;right:16px;font-size:10px;color:#777f8a}
+.gallery-dots{display:flex;justify-content:center;gap:5px;padding:3px 0}
+.gallery-dots button{height:16px;width:21px;position:relative}
+.gallery-dots button:after{content:'';position:absolute;inset:7px 0;background:#d8dce2;border-radius:2px}
+.gallery-dots button.active:after{background:#303a49}
+.showroom-body{padding:25px 20px 10px;background:#fff}
+.showroom-model>p{font-size:11px;color:#858c96;letter-spacing:.3px;margin-bottom:7px}
+.showroom-model h1{font-size:25px;font-weight:600;letter-spacing:-.5px;margin-bottom:25px}
+.showroom-specs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:19px 0 21px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.showroom-specs small{display:block;font-size:10px;color:#989ea6;line-height:1.6;margin-bottom:8px}
+.showroom-specs strong{display:block;font-size:12px;font-weight:500;line-height:1.6}
+.showroom-features{padding-top:27px}
+.showroom-body h2{font-size:18px;font-weight:600;margin-bottom:19px}
+.feature-mosaic{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.feature-mosaic figure{margin:0;height:210px;position:relative;overflow:hidden;background:#f1f3f5;border-radius:2px}
+.feature-mosaic figure.wide{grid-column:1/-1;height:210px}
+.feature-mosaic img{width:100%;height:100%;object-fit:cover}
+.feature-mosaic figure:after{content:'';position:absolute;inset:50% 0 0;background:linear-gradient(transparent,#00000066);pointer-events:none}
+.feature-mosaic figcaption{position:absolute;bottom:16px;left:12px;right:10px;color:white;font-size:12px;font-weight:500;z-index:1}
+.showroom-versions{margin-top:28px}
+.showroom-versions>div{padding:14px 0;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.showroom-versions strong{font-size:12px;font-weight:500;flex:1;line-height:1.7}
+.showroom-versions p{font-size:10px;line-height:1.7;color:#9298a2;text-align:right;max-width:50%}
+.showroom-dimensions{font-size:11px;display:flex;justify-content:space-between;gap:12px;margin-top:20px;color:#7c838d}
+.showroom-dimensions strong{font-weight:400}
+.showroom-source{font-size:9px;line-height:1.8;color:#a3a8b1;margin-top:24px}
+.showroom-bar{justify-content:space-between}
+.showroom-bar>div{flex:1;min-width:0}
+.showroom-bar strong{font-size:15px;font-weight:600;display:block}
+.showroom-bar small{font-size:10px;color:#989ea7;display:block;margin-top:5px}
+.intent-main{padding-top:22px}
+.intent-configuration{font-size:11px;line-height:1.9;color:#7c838e;padding:13px 14px;background:#f6f7f9;border-radius:9px}
+.intent-notice{font-size:11px;line-height:1.8;color:#8b929b;margin-top:15px;padding:12px 0;border-top:1px solid var(--line)}
+.confirm-main .mini-car img{object-fit:contain;padding:3px}
+.order-actions .primary,.order-actions .secondary{font-size:14px;min-height:40px}
+.page-navigation{position:sticky;top:0;z-index:12;background:#fffffffa;border-bottom:1px solid #eceef180;backdrop-filter:blur(16px)}
+.screen{scroll-padding-top:90px;overflow-anchor:none}
+.screen.scroll-locked{overflow:hidden;touch-action:none}
+.detail-hero{height:192px;min-height:0;max-height:none;background:linear-gradient(180deg,#f8f9fa,#edf0f3)}
+.detail-photo{inset:0;height:100%}
+.detail-photo img{padding:4px 13px 14px}
+.detail-hero:after{display:none}
+.service-list{gap:0 12px}
+.service-list button,.service-list button:nth-child(2n){display:flex;align-items:center;justify-content:space-between;gap:7px;padding:16px 0;min-height:74px}
+.service-list button>span{min-width:0}
+.service-list button>.icon{width:15px;height:15px;color:#a1a7af;flex:none}
+.service-list strong{font-size:12px;line-height:1.5}
+.service-list small{font-size:10px;line-height:1.5}
+.delivery-cell strong{display:flex;align-items:center;justify-content:space-between;gap:6px;padding-right:10px}
+.delivery-cell strong>.icon{width:14px;height:14px;color:#a0a6ae;flex:none}
+.progress-track{grid-template-columns:repeat(4,minmax(0,1fr))}
+.sheet{overscroll-behavior:contain}
+.contact-section{padding:24px 0 8px;border-bottom:1px solid var(--line)}
+.contact-section .simple-heading{margin-bottom:8px}
+.contact-field{display:grid;grid-template-columns:58px minmax(0,1fr);gap:12px;align-items:start;border-bottom:1px solid var(--line);padding:10px 0;scroll-margin-top:100px}
+.contact-field:last-child{border-bottom:0}
+.contact-field label{font-size:13px;line-height:40px;color:#535d69}
+.contact-field input{width:100%;min-width:0;min-height:40px;border:1px solid transparent;border-radius:6px;padding:9px 8px;background:#fff;color:var(--ink);font-size:14px;line-height:20px}
+.contact-field input::placeholder{color:#a1a7af}
+.contact-field input:focus{outline:none;border-color:#ffac92;background:#fffcfa}
+.contact-field input[aria-invalid="true"]{border-color:#cc6450}
+.field-error{font-size:11px;color:#b44e3d;line-height:1.6;margin:5px 0 0}
+.field-error:empty{display:none}
+.contact-summary .section-heading{margin-bottom:6px}
+.contact-summary .section-heading h2{margin:0}
+.contact-summary .section-heading button{min-height:36px;font-size:12px}
+.address-page{padding:22px 18px}
+.address-mode{font-size:12px;color:#7a838f;margin:0 4px 13px}
+.address-card{background:#fff;border-radius:14px;padding:0 18px 20px;border:1px solid #ebeef1}
+.address-city-row{width:100%;display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:65px;border-bottom:1px solid var(--line);text-align:left;font-size:14px}
+.address-city-row>span{color:#606976}
+.address-city-row strong{display:flex;align-items:center;gap:9px;font-size:15px;font-weight:500}
+.address-city-row .icon{color:#939ca8;width:16px;height:16px;flex:none}
+.address-field{display:block;font-size:14px;margin:22px 0 12px;color:#606976}
+#delivery-address{width:100%;min-width:0;resize:none;border:1px solid #e9ecf0;border-radius:9px;padding:13px;background:#f8f9fb;font-size:16px;line-height:1.7;color:var(--ink);outline:none}
+#delivery-address::placeholder{color:#a0a7b1;font-size:13px}
+#delivery-address:focus{border-color:#ffac92;background:#fffcfa}
+#delivery-address[aria-invalid="true"]{border-color:#cc6450}
+.vehicle-detail-link{position:absolute;right:14px;bottom:12px;min-height:34px;display:flex;align-items:center;gap:3px;padding:0 11px;border:1px solid #ffffffb0;border-radius:18px;background:#ffffffed;color:#424c59;font-size:11px;backdrop-filter:blur(8px)}
+.vehicle-detail-link .icon{width:13px;height:13px}
+.detail-photo img[src*="zeekr007-exterior"]{object-fit:cover;object-position:center 30%;padding:0}
+.detail-photo img[src*="nio-et5"]{object-fit:cover;object-position:center;padding:0}
+.trim-card em{display:block;font-size:11px;line-height:1.5;margin-top:8px;font-style:normal;color:#7e8791}
+.trim-card.active em{color:#d75535}
+.inline-choice-group{margin-top:21px}
+.inline-choice-group h3{font-size:13px;font-weight:500;color:#4b5562;margin-bottom:11px}
+.compact-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.compact-choice{text-align:left;min-height:65px;padding:12px;border:1px solid #e7e9ed;border-radius:9px;background:white;transition:background .15s}
+.compact-choice strong{display:block;font-size:12px;font-weight:500;line-height:1.5}
+.compact-choice small{display:block;margin-top:5px;font-size:10px;line-height:1.5;color:#8b939e}
+.compact-choice.active{border-color:#ff987a;background:#fff8f4}
+.compact-choice.active strong{color:#dc5736}
+.compact-choice:disabled{background:#f7f8fa;border-color:#eff0f3;color:#abb1b8}
+.compact-choice:disabled small{color:#afb5bd}
+.inline-equipment{display:grid;gap:7px}
+.inline-equipment .equipment-item{padding:12px;border:1px solid #e7e9ed;border-radius:9px;min-height:65px}
+.inline-equipment .equipment-item.active{background:#fff8f4;border-color:#ff987a}
+.inline-plan{border-bottom:1px solid var(--line);padding:25px 0 20px}
+.inline-plan .options{gap:8px}
+.inline-plan .option{padding:13px 7px;min-height:69px}
+.inline-plan .option b{font-size:14px;font-weight:600;white-space:nowrap;font-variant-numeric:tabular-nums}
+.inline-plan .option b em{font-size:10px;font-weight:400;font-style:normal;margin-left:2px}
+.inline-plan .option small{font-size:10px;white-space:nowrap}
+.compact-note{font-size:11px;line-height:1.7;color:#9198a2;margin-top:10px}
+.live-price{margin-top:22px;background:#f7f8fa;padding:18px;border-radius:12px}
+.live-price .simple-heading{font-size:15px;margin-bottom:12px}
+.live-price .summary-pair{font-size:12px;min-height:29px;padding:5px 0}
+.live-price .fee-columns{border-top:1px solid #e5e8ed;margin-top:12px;padding-top:16px}
+.live-price>p{font-size:10px}
+.first-bill-amount{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin:15px 0 20px}
+.first-bill-amount>.price{font-size:32px}
+.first-bill-amount>span:last-child{font-size:11px;color:#88919b}
+.paid-mark{font-size:17px;font-weight:600;color:#29916a}
+.payment-footer{justify-content:space-between}
+.payment-footer>div{display:grid;gap:5px}
+.payment-footer small{font-size:10px;color:#8b939e}
+.payment-footer>.primary{width:150px;min-width:120px}
+.progress-track li b{font-size:10px}
+@media(max-width:540px) and (pointer:coarse){.contact-field input{font-size:16px}}
+@media(max-width:370px){.subscription-entries{gap:10px}.subscription-entry h2{font-size:19px}.subscription-entry p{font-size:10px}.entry-link{padding:0 12px}.trim-card{padding:12px 8px}.trim-card strong{font-size:11px}.paint-swatches{gap:9px}.showroom-body{padding-left:17px;padding-right:17px}.showroom-specs{gap:5px}.showroom-specs strong{font-size:11px}}
+@media(max-width:370px){.subscription-entry>div{padding-left:12px;padding-right:10px}.subscription-entry p{font-size:9px}.brand-catalog{grid-template-columns:68px minmax(0,1fr)}.brand-results .catalog-list{padding-left:10px;padding-right:10px}.brand-results .catalog-card-bottom .price{font-size:21px}.package-heading h2{font-size:15px}.package-heading .tag{font-size:8px}.package-delivery{padding:10px 8px}.package-delivery>small{font-size:8px}.package-option{padding-left:10px}.package-cost{font-size:19px}.vehicle-metrics strong{font-size:18px}.purchase-bar{gap:9px}.purchase-bar>.primary{width:122px}.bar-total .price{font-size:20px}.bar-term{padding-right:9px}}
+</style>
 </head>
 <body>
   <main class="stage">
@@ -20,8 +559,743 @@
     </div>
     <p class="preview-foot">业务评审第二版 · 车源、订阅报价与交易为演示</p>
   </main>
-  <script src="assets/icons.js"></script>
-  <script src="vehicle-data.js"></script>
-  <script src="app.js"></script>
+  <script>/* Lucide icons
+ISC License
+
+Copyright (c) 2026 Lucide Icons and Contributors
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+---
+
+The following Lucide icons are derived from the Feather project:
+
+airplay, alert-circle, alert-octagon, alert-triangle, aperture, arrow-down-circle, arrow-down-left, arrow-down-right, arrow-down, arrow-left-circle, arrow-left, arrow-right-circle, arrow-right, arrow-up-circle, arrow-up-left, arrow-up-right, arrow-up, at-sign, calendar, cast, check, chevron-down, chevron-left, chevron-right, chevron-up, chevrons-down, chevrons-left, chevrons-right, chevrons-up, circle, clipboard, clock, code, columns, command, compass, corner-down-left, corner-down-right, corner-left-down, corner-left-up, corner-right-down, corner-right-up, corner-up-left, corner-up-right, crosshair, database, divide-circle, divide-square, dollar-sign, download, external-link, feather, frown, hash, headphones, help-circle, info, italic, key, layout, life-buoy, link-2, link, loader, lock, log-in, log-out, maximize, meh, minimize, minimize-2, minus-circle, minus-square, minus, monitor, moon, more-horizontal, more-vertical, move, music, navigation-2, navigation, octagon, pause-circle, percent, plus-circle, plus-square, plus, power, radio, rss, search, server, share, shopping-bag, sidebar, smartphone, smile, square, table-2, tablet, target, terminal, trash-2, trash, triangle, tv, type, upload, x-circle, x-octagon, x-square, x, zoom-in, zoom-out
+
+The MIT License (MIT) (for the icons listed above)
+
+Copyright (c) 2013-present Cole Bemis
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
+window.SUBSCRIPTION_ICONS = {"House":[["path",{"d":"M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"}],["path",{"d":"M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"}]],"CarFront":[["path",{"d":"m21 8-2 2-1.5-3.7A2 2 0 0 0 15.646 5H8.4a2 2 0 0 0-1.903 1.257L5 10 3 8"}],["path",{"d":"M7 14h.01"}],["path",{"d":"M17 14h.01"}],["rect",{"width":"18","height":"8","x":"3","y":"10","rx":"2"}],["path",{"d":"M5 18v2"}],["path",{"d":"M19 18v2"}]],"FileText":[["path",{"d":"M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"}],["path",{"d":"M14 2v5a1 1 0 0 0 1 1h5"}],["path",{"d":"M10 9H8"}],["path",{"d":"M16 13H8"}],["path",{"d":"M16 17H8"}]],"UserRound":[["circle",{"cx":"12","cy":"8","r":"5"}],["path",{"d":"M20 21a8 8 0 0 0-16 0"}]],"ChevronLeft":[["path",{"d":"m15 18-6-6 6-6"}]],"ChevronRight":[["path",{"d":"m9 18 6-6-6-6"}]],"ChevronDown":[["path",{"d":"m6 9 6 6 6-6"}]],"ChevronUp":[["path",{"d":"m18 15-6-6-6 6"}]],"Headset":[["path",{"d":"M3 11h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Zm0 0a9 9 0 1 1 18 0m0 0v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3Z"}],["path",{"d":"M21 16v2a4 4 0 0 1-4 4h-5"}]],"Settings2":[["path",{"d":"M14 17H5"}],["path",{"d":"M19 7h-9"}],["circle",{"cx":"17","cy":"17","r":"3"}],["circle",{"cx":"7","cy":"7","r":"3"}]],"Share":[["path",{"d":"M12 2v13"}],["path",{"d":"m16 6-4-4-4 4"}],["path",{"d":"M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"}]],"MapPin":[["path",{"d":"M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"}],["circle",{"cx":"12","cy":"10","r":"3"}]],"CalendarDays":[["path",{"d":"M8 2v4"}],["path",{"d":"M16 2v4"}],["rect",{"width":"18","height":"18","x":"3","y":"4","rx":"2"}],["path",{"d":"M3 10h18"}],["path",{"d":"M8 14h.01"}],["path",{"d":"M12 14h.01"}],["path",{"d":"M16 14h.01"}],["path",{"d":"M8 18h.01"}],["path",{"d":"M12 18h.01"}],["path",{"d":"M16 18h.01"}]],"Clock3":[["circle",{"cx":"12","cy":"12","r":"10"}],["path",{"d":"M12 6v6h4"}]],"ShieldCheck":[["path",{"d":"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"}],["path",{"d":"m9 12 2 2 4-4"}]],"Truck":[["path",{"d":"M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"}],["path",{"d":"M15 18H9"}],["path",{"d":"M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"}],["circle",{"cx":"17","cy":"18","r":"2"}],["circle",{"cx":"7","cy":"18","r":"2"}]],"CircleCheck":[["circle",{"cx":"12","cy":"12","r":"10"}],["path",{"d":"m9 12 2 2 4-4"}]],"IdCard":[["path",{"d":"M16 10h2"}],["path",{"d":"M16 14h2"}],["path",{"d":"M6.17 15a3 3 0 0 1 5.66 0"}],["circle",{"cx":"9","cy":"11","r":"2"}],["rect",{"x":"2","y":"5","width":"20","height":"14","rx":"2"}]],"ReceiptText":[["path",{"d":"M13 16H8"}],["path",{"d":"M14 8H8"}],["path",{"d":"M16 12H8"}],["path",{"d":"M4 3a1 1 0 0 1 1-1 1.3 1.3 0 0 1 .7.2l.933.6a1.3 1.3 0 0 0 1.4 0l.934-.6a1.3 1.3 0 0 1 1.4 0l.933.6a1.3 1.3 0 0 0 1.4 0l.933-.6a1.3 1.3 0 0 1 1.4 0l.934.6a1.3 1.3 0 0 0 1.4 0l.933-.6A1.3 1.3 0 0 1 19 2a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1 1.3 1.3 0 0 1-.7-.2l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.934.6a1.3 1.3 0 0 1-1.4 0l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-1.4 0l-.934-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-.7.2 1 1 0 0 1-1-1z"}]],"Search":[["path",{"d":"m21 21-4.34-4.34"}],["circle",{"cx":"11","cy":"11","r":"8"}]],"ArrowDownUp":[["path",{"d":"m3 16 4 4 4-4"}],["path",{"d":"M7 20V4"}],["path",{"d":"m21 8-4-4-4 4"}],["path",{"d":"M17 4v16"}]],"RotateCw":[["path",{"d":"M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"}],["path",{"d":"M21 3v5h-5"}]],"Wrench":[["path",{"d":"M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"}]],"TruckElectric":[["path",{"d":"M14 19V7a2 2 0 0 0-2-2H9"}],["path",{"d":"M15 19H9"}],["path",{"d":"M19 19h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62L18.3 9.38a1 1 0 0 0-.78-.38H14"}],["path",{"d":"M2 13v5a1 1 0 0 0 1 1h2"}],["path",{"d":"M4 3 2.15 5.15a.495.495 0 0 0 .35.86h2.15a.47.47 0 0 1 .35.86L3 9.02"}],["circle",{"cx":"17","cy":"19","r":"2"}],["circle",{"cx":"7","cy":"19","r":"2"}]],"X":[["path",{"d":"M18 6 6 18"}],["path",{"d":"m6 6 12 12"}]],"Check":[["path",{"d":"M20 6 9 17l-5-5"}]]};
+</script>
+  <script>/* Manufacturer configurations, checked 2026-10-16. Sources: research/SOURCES.md.
+ * extra values are DEMO monthly deltas, never manufacturer or binding rental quotes.
+ * Optional equipment does not produce a fabricated monthly price.
+ */
+window.VEHICLE_DATA = {
+  'new-x': {
+    year:'全新一代 A6L', image:'embedded-assets/asset-001.webp',
+    specs:[['车身','中大型轿车'],['轴距','3,066mm'],['变速箱','7速 S tronic'],['座位','5座']],
+    dimensions:'5,142 × 1,874 × 1,464mm',
+    colors:[['传奇黑','#222326'],['茉莉白','#f5f4ef'],['香槟黑','#504c45'],['曼达洛银','#aeb3b4'],['深洋蓝','#273b50']],
+    trims:[
+      {id:'a6-select',name:'臻选型',trim:'2.0T · 150kW · 前驱',extra:0,features:['星辰矩阵大灯','三屏数字座舱','18英寸轮毂']},
+      {id:'a6-enjoy',name:'尊享型',trim:'2.0T · 200kW · 前驱',extra:600,features:['B&O音响','四区自动空调','19英寸对比色轮毂']},
+      {id:'a6-quattro',name:'quattro 尊享型',trim:'2.0T · 200kW · 四驱',extra:1200,features:['HDI双电机混动','前排座椅通风','20英寸对比色轮毂']},
+      {id:'a6-flagship',name:'3.0T quattro 旗舰型',trim:'3.0T V6 · 270kW · 四驱',extra:2400,features:['纳帕真皮座椅','前排通风按摩','21英寸对比色轮毂']}
+    ],
+    interiors:[
+      {id:'serica',name:'Serica 科技皮',status:['standard','standard','standard','unavailable']},
+      {id:'nappa',name:'高级纳帕真皮',note:'含真皮包',status:['optional','optional','optional','standard']}
+    ],
+    wheels:[
+      {id:'w18',name:'18英寸铝合金轮毂',status:['standard','unavailable','unavailable','unavailable']},
+      {id:'w19',name:'19英寸铝合金轮毂',status:['optional','optional','unavailable','unavailable']},
+      {id:'w19c',name:'19英寸对比色轮毂',status:['optional','standard','unavailable','unavailable']},
+      {id:'w20c',name:'20英寸对比色轮毂',status:['optional','optional','standard','unavailable']},
+      {id:'w20b',name:'20英寸黑色轮毂',status:['optional','optional','optional','unavailable']},
+      {id:'w21c',name:'21英寸对比色轮毂',status:['unavailable','optional','optional','standard']}
+    ],
+    options:[
+      {id:'bo',name:'B&O 音响',status:['optional','standard','standard','standard']},
+      {id:'hud',name:'W-HUD 抬头显示',status:['optional','optional','optional','optional']},
+      {id:'air',name:'自适应空气悬架',status:['unavailable','unavailable','optional','optional']},
+      {id:'steer',name:'全轮转向',status:['unavailable','unavailable','optional','optional']},
+      {id:'digital',name:'数字大灯',status:['optional','optional','optional','optional']},
+      {id:'doors',name:'车门电吸关闭',status:['optional','optional','optional','standard']}
+    ],
+    gallery:[['embedded-assets/asset-001.webp','前侧外观'],['embedded-assets/asset-002.webp','车身侧面'],['embedded-assets/asset-003.webp','尾部外观'],['embedded-assets/asset-004.jpg','座舱空间']],
+    features:[['embedded-assets/asset-005.jpg','星辰矩阵大灯'],['embedded-assets/asset-004.jpg','数字座舱'],['embedded-assets/asset-006.jpg','从容，见于每一程']],
+    source:'奥迪中国 · 全新奥迪 A6L 车型折页', sourceUrl:'https://www.audi.cn/zh/models/a/a6/new_a6l.html'
+  },
+  'new-v': {
+    year:'2026款 e:HEV',image:'embedded-assets/asset-007.png',
+    specs:[['车型','紧凑型SUV'],['动力','2.0L 混动'],['电机功率','135kW'],['座位','5座']],
+    colors:[['晶耀白','#f4f3f0'],['摩登灰','#838688'],['彩晶黑','#24272a']],
+    trims:[
+      {id:'crv-shang',name:'智尚版',trim:'2.0L e:HEV · 两驱',extra:0,features:['12.3英寸中控屏','ANC主动降噪','18英寸轮毂']},
+      {id:'crv-xiang',name:'智享版',trim:'2.0L e:HEV · 两驱',extra:200,features:['Honda SENSING','真皮座椅','8扬声器']},
+      {id:'crv-yi',name:'智逸版',trim:'2.0L e:HEV · 两驱',extra:350,features:['前排座椅通风加热','氛围灯','8探头驻车雷达']},
+      {id:'crv-awd',name:'智逸四驱版',trim:'2.0L e:HEV · 四驱',extra:550,features:['实时四驱','后排座椅加热','前排座椅通风']},
+      {id:'crv-rui',name:'智睿版',trim:'2.0L e:HEV · 两驱',extra:650,features:['360°全景影像','电动尾门','50W无线充电']},
+      {id:'crv-zhen',name:'智臻版',trim:'2.0L e:HEV · 两驱',extra:850,features:['HUD抬头显示','BOSE音响','19英寸轮毂']}
+    ],
+    interiors:[],wheels:[{id:'w18',name:'18英寸轮毂',status:['standard','standard','standard','standard','standard','unavailable']},{id:'w19',name:'19英寸轮毂',status:['unavailable','unavailable','unavailable','unavailable','unavailable','standard']}],options:[],
+    gallery:[['embedded-assets/asset-007.png','外观'],['embedded-assets/asset-008.jpg','车身设计'],['embedded-assets/asset-009.jpg','座舱空间']],
+    features:[['embedded-assets/asset-010.jpg','LED前大灯'],['embedded-assets/asset-009.jpg','宽适座舱'],['embedded-assets/asset-008.jpg','自在，驶向生活']],
+    source:'东风本田 · CR-V e:HEV 配置表',sourceUrl:'https://www.dongfeng-honda.com/cr-v/HEV/js/configuration.html'
+  },
+  'new-mg': {
+    catalogImage:'embedded-assets/asset-011.png',
+    year:'2024款 MG4 EV',
+    specs:[['车型','紧凑型两厢车'],['轴距','2,705mm'],['电池','49 / 64kWh'],['座位','5座']],
+    colors:[['骑士银','#a4a7aa'],['高冷灰','#686b71'],['忠毅白','#f1f2f3'],['回头绿','#146644'],['花木蓝','#23758b'],['中国红','#ba2237']],
+    colorTrims:{'花木蓝':['mg-520'],'中国红':['mg-520']},
+    trims:[
+      {id:'mg-champion',name:'出海冠军版',trim:'415km CLTC · 125kW · 后驱',extra:0,features:['49kWh电池','360°全景影像','前排座椅加热']},
+      {id:'mg-520',name:'520km旗舰版',trim:'520km CLTC · 150kW · 后驱',extra:300,features:['64kWh电池','ACC自适应巡航','前排手机无线充电']},
+      {id:'mg-awd',name:'四驱性能版',trim:'460km CLTC · 315kW · 四驱',extra:700,features:['3.8秒零百加速','一体式运动座椅','18英寸轮毂']}
+    ],
+    interiors:[{id:'black',name:'高雅黑内饰',status:['standard','standard','standard']},{id:'gray',name:'极简灰内饰',status:['optional','optional','unavailable']}],
+    wheels:[{id:'w17',name:'17英寸轮毂',status:['standard','standard','unavailable']},{id:'w18',name:'18英寸轮毂',status:['unavailable','unavailable','standard']}],
+    options:[{id:'heatpump',name:'热泵空调',status:['optional','optional','optional']},{id:'roof',name:'天空之境穹顶天幕',status:['unavailable','optional','standard']}],
+    gallery:[['embedded-assets/asset-012.jpg','车身外观'],['embedded-assets/asset-013.jpg','城市行驶']],
+    features:[['embedded-assets/asset-013.jpg','轻盈城市出行'],['embedded-assets/asset-012.jpg','灵动两厢造型']],
+    source:'上汽名爵 · MG4 EV 2024年配置表',sourceUrl:'https://www.saicmg.com/pc/vehicles/sedan/mulan/mulan20240704.pdf'
+  },
+  'new-m3': {
+    catalogImage:'embedded-assets/asset-014.png',
+    year:'Model 3',specs:[['车型','中型轿车'],['轴距','2,875mm'],['动力','纯电'],['座位','5座']],
+    colors:[['星空灰','#56595f'],['海洋蓝','#285078']],
+    trims:[
+      {id:'tesla-rwd',name:'后轮驱动版',trim:'后轮驱动',extra:0,features:['玻璃车顶','基础辅助驾驶','座椅加热']},
+      {id:'tesla-lr',name:'长续航后轮驱动版',trim:'长续航 · 后轮驱动',extra:600,features:['玻璃车顶','基础辅助驾驶','座椅加热']},
+      {id:'tesla-awd',name:'长续航全轮驱动版',trim:'双电机 · 全轮驱动',extra:1000,features:['玻璃车顶','基础辅助驾驶','座椅加热']}
+    ],
+    interiors:[{id:'black',name:'深色高级内饰',status:['standard','standard','standard']},{id:'light',name:'浅色高级内饰',status:['optional','optional','optional']}],
+    wheels:[{id:'photon',name:'18英寸光子轮毂',status:['standard','standard','standard']},{id:'nova',name:'19英寸新星轮毂',status:['optional','optional','optional']}],options:[],
+    gallery:[['embedded-assets/asset-015.jpg','车身外观'],['embedded-assets/asset-016.jpg','极简座舱'],['embedded-assets/asset-017.jpg','玻璃车顶']],
+    features:[['embedded-assets/asset-016.jpg','极简座舱'],['embedded-assets/asset-017.jpg','玻璃车顶'],['embedded-assets/asset-015.jpg','尽享每一程']],
+    source:'特斯拉中国 · 官方车型与配置',sourceUrl:'https://www.tesla.cn/model3/design'
+  }
+};
+// 2026-10-20 review: archived model years, not a promise of live inventory.
+// Rental deltas below are explicit demo pricing, not manufacturer option prices.
+Object.assign(window.VEHICLE_DATA, {
+  'new-zeekr007': {
+    catalogImage:'embedded-assets/asset-018.png',
+    year:'2025款', image:'embedded-assets/asset-019.jpg', thumbnail:'embedded-assets/asset-020.png',
+    specs:[['车身','中型轿车'],['动力','纯电'],['电池','75 / 100kWh'],['座位','5座']],
+    dimensions:'4,865 × 1,900 × 1,450mm（非性能版）',
+    colors:[['绿色','#3d8175'],['灰色','#7b818c'],['白色','#ffffff'],['黑色','#252525']],
+    trims:[
+      {id:'z-r75',name:'后驱智驾版',trim:'75kWh · 后驱 · CLTC 688km',extra:0,features:['800V平台','19英寸轮毂']},
+      {id:'z-r100',name:'长续航后驱智驾版',trim:'100kWh · 后驱 · CLTC 870km',extra:500,features:['800V平台','19英寸轮毂']},
+      {id:'z-a75',name:'四驱智驾版',trim:'75kWh · 四驱 · CLTC 616km',extra:700,features:['双电机四驱','19英寸轮毂']},
+      {id:'z-a100',name:'长续航四驱智驾版',trim:'100kWh · 四驱 · CLTC 770km',extra:1100,features:['双电机四驱','19英寸轮毂']},
+      {id:'z-perf',name:'四驱性能版',trim:'100kWh · 四驱 · CLTC 660km',extra:1800,features:['运动外观套件','20英寸轮毂']}
+    ],
+    interiors:[
+      {id:'z-blue-white',name:'蓝白内饰',status:['standard','standard','standard','standard','unavailable']},
+      {id:'z-black-gray',name:'黑灰内饰',status:['optional','optional','optional','optional','standard'],demoMonthly:0}
+    ],
+    wheels:[
+      {id:'z19',name:'19英寸轮毂',status:['standard','standard','standard','standard','unavailable']},
+      {id:'z20',name:'20英寸轮毂',status:['unavailable','unavailable','unavailable','unavailable','standard']}
+    ],
+    options:[{id:'z-sport',name:'运动外观套件',demoMonthly:180,status:['optional','optional','optional','optional','standard']}],
+    gallery:[['embedded-assets/asset-019.jpg','外观展示'],['embedded-assets/asset-021.jpg','侧面造型'],['embedded-assets/asset-022.jpg','智能座舱']],
+    features:[['embedded-assets/asset-021.jpg','流线型车身'],['embedded-assets/asset-022.jpg','OLED 中控屏']],
+    source:'极氪官方车型图库；懂车帝2025款参数表 · 仅收录已核实配置',
+    sourceUrl:'https://www.dongchedi.com/auto/params-carIds-x-9128'
+  },
+  'new-nio-et5': {
+    catalogImage:'embedded-assets/asset-023.png',
+    year:'2025款 · 100kWh', image:'embedded-assets/asset-024.jpg', thumbnail:'embedded-assets/asset-025.png',
+    specs:[['车身','中型轿车'],['驱动','双电机四驱'],['电池','100kWh'],['座位','5座']],
+    colors:[['白色','#f3f3f0'],['黑色','#272a30'],['银色','#b5b7bd']],
+    trims:[{id:'et5-100',name:'100kWh 长续航版',trim:'双电机四驱 · 5座',extra:0,features:['CDC动态悬架','15.6英寸AMOLED屏','18.8英寸HUD']}],
+    interiors:[
+      {id:'et5-gray',name:'灰色内饰',note:'Storm Gray',status:['standard']},
+      {id:'et5-gravel',name:'米色内饰',note:'Warm Gravel',status:['optional'],demoMonthly:0},
+      {id:'et5-violet',name:'紫色内饰',note:'Stellar Violet',status:['optional'],demoMonthly:0}
+    ],
+    wheels:[{id:'et5-20',name:'20英寸五辐刀锋轮毂',status:['standard']}],
+    options:[{id:'et5-mirror',name:'800万像素流媒体内后视镜',demoMonthly:80,status:['optional']}],
+    gallery:[['embedded-assets/asset-026.jpg','车身外观'],['embedded-assets/asset-027.jpg','智能座舱'],['embedded-assets/asset-028.jpg','座椅空间']],
+    features:[['embedded-assets/asset-027.jpg','环抱式座舱'],['embedded-assets/asset-028.jpg','舒适座椅'],['embedded-assets/asset-026.jpg','纯电轿跑造型']],
+    source:'蔚来官方ET5车型页及2025年发布资料 · 平台收录配置，非厂家完整选装目录',
+    sourceUrl:'https://www.nio.com/et5'
+  }
+});
+// Stock and new cars share model photography, never a configurable trim catalog.
+window.STOCK_SHOWROOM = Object.fromEntries([
+  ['mg','new-mg','2024款 MG4 EV'],
+  ['m3','new-m3','2025款 Model 3'],
+  ['crv','new-v','2025款 CR-V e:HEV']
+].map(([id,source,year])=>{
+  const data=window.VEHICLE_DATA[source];
+  return [id,{year,catalogImage:data.catalogImage,gallery:data.gallery,features:data.features,source:data.source,sourceUrl:data.sourceUrl}];
+}));
+window.STOCK_SHOWROOM.q5={
+  year:'2025款 Q5L',
+  gallery:[['embedded-assets/asset-029.png','车辆外观'],['embedded-assets/asset-030.jpg','座舱空间'],['embedded-assets/asset-031.jpg','尾部设计'],['embedded-assets/asset-032.jpg','出行场景']],
+  features:[['embedded-assets/asset-033.jpg','动感车头造型'],['embedded-assets/asset-030.jpg','双屏数字座舱'],['embedded-assets/asset-032.jpg','与生活，一同出发']],
+  source:'奥迪中国 · Q5L 车型图库',sourceUrl:'https://www.audi.cn/zh/models/q/q5/q5l.html'
+};
+</script>
+  <script>(() => {
+  'use strict';
+  const $ = (s, root = document) => root.querySelector(s);
+  const escape = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const icon = (name, small = false) => `<svg class="icon${small ? ' small' : ''}" viewBox="0 0 24 24" aria-hidden="true">${(window.SUBSCRIPTION_ICONS[name] || []).map(([tag, attrs]) => `<${tag} ${Object.entries(attrs).map(([k,v])=>`${k}="${escape(v)}"`).join(' ')} />`).join('')}</svg>`;
+  const number = n => Number(n).toLocaleString('zh-CN');
+  const money = n => `¥${number(n)}`;
+  const price = (n, unit = '') => `<span class="price"><span class="currency">¥</span>${number(n)}${unit ? `<span class="unit">${unit}</span>` : ''}</span>`;
+  const cars = [
+    {id:'mg', brand:'名爵', name:'MG4 EV', edition:'2025款 520km 旗舰版', image:'embedded-assets/asset-034.png', status:'准新车', fast:'最快2天交付', terms:{3:3899,6:3399,12:2999}, miles:'1万公里以内', tags:['城市通勤','信用免押'], group:'electric', year:'2025款', color:'珍珠白', energy:'纯电', range:'520km', rangeLabel:'CLTC 续航', seats:'5座', transmission:'自动挡'},
+    {id:'m3', brand:'特斯拉', name:'Model 3', edition:'后轮驱动焕新版', image:'embedded-assets/asset-035.jpg', status:'准新车', fast:'最快3天交付', terms:{3:5599,6:4999,12:4399}, miles:'0.8万公里以内', tags:['智能座舱','长续航'], group:'electric', year:'2025款', color:'珍珠白', energy:'纯电', range:'606km', rangeLabel:'CLTC 续航', seats:'5座', transmission:'自动挡'},
+    {id:'q5', brand:'奥迪', name:'奥迪 Q5L', edition:'40T 豪华动感型', image:'embedded-assets/asset-029.png', status:'准新车', fast:'最快5天交付', terms:{3:6899,6:6199,12:5599}, miles:'1.2万公里以内', tags:['豪华SUV','宽适空间'], group:'suv', year:'2025款', color:'曜石黑', energy:'汽油', range:'2.0T', rangeLabel:'发动机', seats:'5座', transmission:'自动挡'},
+    {id:'crv', brand:'本田', name:'本田 CR-V', edition:'混动智享版', image:'embedded-assets/asset-036.jpg', status:'现车', fast:'最快4天交付', terms:{3:4899,6:4299,12:3799}, miles:'1.5万公里以内', tags:['家庭出行','低油耗'], group:'suv', year:'2025款', color:'珍珠白', energy:'混动', range:'2.0L', rangeLabel:'发动机', seats:'5座', transmission:'自动挡'},
+    {id:'new-x', brand:'奥迪', name:'奥迪 A6L', edition:'新车专属订阅 · 配置可选', image:'embedded-assets/asset-037.jpg', status:'全新车', fast:'交付时间待确认', terms:{12:7999,24:6999}, miles:'全新车', tags:['新车订阅','顾问报价'], group:'sedan', newCar:true, year:'2026款', color:'曜石黑', energy:'汽油', range:'2.0T', rangeLabel:'发动机', seats:'5座', transmission:'自动挡'},
+    {id:'new-v', brand:'本田', name:'本田 CR-V', edition:'新车专属订阅 · 配置可选', image:'embedded-assets/asset-036.jpg', status:'全新车', fast:'交付时间待确认', terms:{12:4699,24:3999}, miles:'全新车', tags:['全新SUV','配置可选'], group:'suv', newCar:true, year:'2026款', color:'珍珠白', energy:'混动', range:'2.0L', rangeLabel:'发动机', seats:'5座', transmission:'自动挡'}
+  ];
+  // New-car rental amounts are local demo estimates; official configuration data is separate.
+  cars.push(
+    {...cars[1],id:'new-m3',newCar:true,status:'全新车',edition:'新车选配',fast:'交付时间待确认',miles:'全新车',terms:{12:5999,24:5299},tags:['智能座舱','配置可选']},
+    {...cars[0],id:'new-mg',newCar:true,status:'全新车',edition:'新车选配',fast:'交付时间待确认',miles:'全新车',terms:{12:4299,24:3699},tags:['城市通勤','配置可选']}
+  );
+  // Keep historical vehicle IDs while the selectable catalog focuses on EVs.
+  // Reuse the already documented MG4 / Model 3 configurations; do not invent supply.
+  cars.forEach(c=>{c.retired=c.energy!=='纯电';});
+  cars.push(
+    {id:'new-zeekr007',brand:'极氪',name:'极氪 007',newCar:true,featured:true,edition:'2025款',image:'embedded-assets/asset-019.jpg',terms:{12:5299,24:4699},energy:'纯电',seats:'5座',transmission:'自动挡',group:'electric',range:'75 / 100kWh',rangeLabel:'电池',tags:['800V平台','配置可选']},
+    {id:'new-nio-et5',brand:'蔚来',name:'蔚来 ET5',newCar:true,featured:true,edition:'2025款',image:'embedded-assets/asset-026.jpg',terms:{12:6399,24:5699},energy:'纯电',seats:'5座',transmission:'自动挡',group:'electric',range:'100kWh',rangeLabel:'电池',tags:['双电机四驱','配置可选']}
+  );
+  const vehicleData = window.VEHICLE_DATA;
+  const brandOrder = ['极氪','蔚来','特斯拉','名爵'];
+  const brandRank = brand => {const rank=brandOrder.indexOf(brand);return rank<0?brandOrder.length:rank;};
+  const vehiclePackages = Object.fromEntries(Object.entries(vehicleData).map(([id,d])=>[id,d.trims]));
+  cars.forEach(c=>{const d=vehicleData[c.id];if(d){c.year=d.year;c.image=d.image||c.image;c.edition=d.trims[0].name;c.fast='交付时间待确认';c.tags=[c.energy==='纯电'?'纯电出行':'舒适出行','配置可选'];}});
+  cars[0].year='2024款';cars[0].edition='520km旗舰版';cars[0].color='忠毅白';
+  const storageKey = 'xc-subscription-ui-v2';
+  // Illustrative stock only: query results genuinely match these local constraints.
+  const demoSupply = {
+    mg:{cities:['上海','杭州','广州','深圳','成都','南京'],ready:'2026-10-18'},
+    m3:{cities:['上海','杭州','深圳','北京'],ready:'2026-10-20'},
+    q5:{cities:['上海','北京','广州','深圳'],ready:'2026-10-22'},
+    crv:{cities:['上海','杭州','广州','成都','北京'],ready:'2026-10-19'},
+    'new-x':{cities:['上海','杭州','北京','深圳'],ready:null},
+    'new-v':{cities:['上海','杭州','广州','深圳','成都'],ready:null}
+  };
+  demoSupply['new-m3']=demoSupply.m3;demoSupply['new-mg']=demoSupply.mg;
+  for(const id of ['new-zeekr007','new-nio-et5'])demoSupply[id]={cities:['上海','杭州','北京','深圳','广州','成都'],ready:null};
+  const cities = [
+    ['北京','beijing','朝阳区'],['成都','chengdu','武侯区'],['重庆','chongqing','渝北区'],['长沙','changsha','岳麓区'],['长春','changchun','南关区'],
+    ['东莞','dongguan','南城街道'],['大连','dalian','中山区'],['大同','datong','平城区'],['佛山','foshan','禅城区'],['福州','fuzhou','鼓楼区'],
+    ['广州','guangzhou','天河区'],['贵阳','guiyang','观山湖区'],['桂林','guilin','七星区'],['杭州','hangzhou','滨江区'],['合肥','hefei','蜀山区'],['海口','haikou','龙华区'],['哈尔滨','haerbin','南岗区'],['惠州','huizhou','惠城区'],
+    ['济南','jinan','历下区'],['嘉兴','jiaxing','南湖区'],['金华','jinhua','婺城区'],['昆明','kunming','官渡区'],['洛阳','luoyang','洛龙区'],['兰州','lanzhou','城关区'],
+    ['南京','nanjing','建邺区'],['宁波','ningbo','鄞州区'],['南昌','nanchang','红谷滩区'],['南宁','nanning','青秀区'],['青岛','qingdao','市南区'],['泉州','quanzhou','丰泽区'],
+    ['上海','shanghai','浦东新区'],['深圳','shenzhen','南山区'],['苏州','suzhou','工业园区'],['沈阳','shenyang','和平区'],['三亚','sanya','吉阳区'],['上饶','shangrao','信州区'],['石家庄','shijiazhuang','裕华区'],
+    ['天津','tianjin','河西区'],['太原','taiyuan','小店区'],['武汉','wuhan','武昌区'],['无锡','wuxi','滨湖区'],['温州','wenzhou','鹿城区'],
+    ['西安','xian','雁塔区'],['厦门','xiamen','思明区'],['徐州','xuzhou','云龙区'],['烟台','yantai','莱山区'],['扬州','yangzhou','邗江区'],
+    ['郑州','zhengzhou','金水区'],['珠海','zhuhai','香洲区'],['中山','zhongshan','东区街道']
+  ].map(([name,pinyin,district])=>({name,pinyin,district,letter:pinyin[0].toUpperCase()}));
+  const cityDistrict = Object.fromEntries(cities.map(c=>[c.name,c.district]));
+  const cityLetters = [...new Set(cities.map(c=>c.letter))];
+  const demoToday = '2026-10-16', earliestDelivery = '2026-10-18';
+  const seedOrder = () => ({id:'XC202609200018', carId:'mg', monthly:3399, term:6, mileage:2500, coverage:'care', delivery:'door', city:'上海', address:'上海市浦东新区', start:'2026-09-20', time:'10:00', status:'active', services:[], nextBill:'2026-10-20', paid:true});
+  let saved;
+  try { saved = JSON.parse(localStorage.getItem(storageKey) || 'null'); } catch { saved = null; }
+  if (!saved) {
+    let legacy;
+    try { legacy = JSON.parse(localStorage.getItem('xc-subscription-demo') || 'null'); } catch { legacy = null; }
+    saved = {verified:legacy ? !!legacy.verified : true, orders:legacy?.order ? [{...seedOrder(), ...legacy.order, id:legacy.order.no || seedOrder().id, status:legacy.order.active ? 'active' : 'preparing'}] : [seedOrder()]};
+  }
+  // Reconcile unpaid legacy fulfillment examples without inventing a payment.
+  for(const o of Array.isArray(saved.orders)?saved.orders:[]){
+    if(['preparing','delivering'].includes(o.status)&&!o.paid){
+      o.legacyStatus=o.status;o.status=o.quoteConfirmed?'pending':'inquiry';
+    }
+  }
+  const state = {page:'home', city:'上海', address:'上海市浦东新区', start:'2026-10-20', time:'10:00', term:24, mileage:2500, coverage:'care', delivery:'door', catalog:'new', sort:'default', search:'', currentCar:cars[0], agreement:false, verified:!!saved.verified, orders:Array.isArray(saved.orders) ? saved.orders.filter(o=>cars.some(c=>c.id===o.carId)) : [], selectedOrder:null, orderFilter:'all', sheet:null, busy:false, configDraft:null, serviceType:'', sheetOrigin:null, backStack:[], invoice:saved.invoice || null};
+  const app = $('#app'), fixed = $('#fixed'), overlays = $('#overlays');
+  state.cityQuery='';state.recentCities=['上海','杭州'];state.locatedCity='上海';state.calendarMonths=4;state.dateDraft=null;
+  state.catalogQuery=null;state.browseCatalog='new';state.homeTerms={};state.brand='all';state.packageId='';state.vehicleChoices={};state.galleryIndex=0;
+  state.depositWaived=saved.depositWaived ?? state.verified;state.pendingBill=null;state.debitConsent=false;
+  state.driverName='';state.driverPhone='';state.contactErrors={};state.addressDraft=null;
+  let toastTimer, lastFocus, sheetScrollTop=0;
+  function showSheet(type,content){
+    if(!state.sheet){lastFocus=document.activeElement;sheetScrollTop=app.scrollTop;}
+    state.sheet=type;overlays.innerHTML=content;app.inert=true;fixed.inert=true;app.classList.add('scroll-locked');
+    $('.sheet')?.focus({preventScroll:true});app.scrollTop=sheetScrollTop;
+  }
+  const dateLabel = date => {const [,m,d] = date.split('-'); return `${Number(m)}月${Number(d)}日`;};
+  const isoDate = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  function endDate(start,months) {const [y,m,d]=start.split('-').map(Number);const result=new Date(y,m-1+months,1,12);result.setDate(Math.min(d,new Date(result.getFullYear(),result.getMonth()+1,0).getDate()));return isoDate(result);}
+  const fullDateLabel = d => d.slice(0,4)+'年'+dateLabel(d);
+  const draftTime = () => `${String(state.dateDraft.hour).padStart(2,'0')}:${String(state.dateDraft.minute).padStart(2,'0')}`;
+  function fitPreview() {const native=matchMedia('(pointer: coarse) and (max-width: 540px)').matches;const scale=native?1:Math.max(.2,Math.min(1,(innerWidth-32)/390,(innerHeight-76)/844));document.documentElement.style.setProperty('--preview-scale',scale);}
+  const coverageName = value => value === 'premium' ? '无忧保障' : '安心保障';
+  const deliveryName = value => value === 'store' ? '门店取车' : '送车上门';
+  const carOf = order => cars.find(c=>c.id===order.carId) || cars[0];
+  const selectedOrder = () => state.orders.find(o=>o.id===state.selectedOrder) || state.orders[0];
+  const lowestTerm = c => Number(Object.keys(c.terms).reduce((a,b)=>c.terms[a]<=c.terms[b]?a:b));
+  const homeTerm = c => state.homeTerms[c.id] || (c.terms[state.term]?state.term:Number(Object.keys(c.terms)[0]));
+  const carName = c => c.brand==='特斯拉'?'特斯拉 '+c.name:c.name;
+  const catalogMode = () => state.page==='searchResults'?state.catalogQuery.catalog:state.browseCatalog;
+  function selection() {return {city:state.city,address:state.address,start:state.start,time:state.time,term:state.term,catalog:state.catalog};}
+  function syncQuerySelection() {if(state.catalogQuery&&(state.page==='searchResults'||state.backStack.at(-1)?.page==='searchResults'))state.catalogQuery={...state.catalogQuery,...selection()};}
+  function matchesSupply(c,q) {const s=demoSupply[c.id];return !!c.terms[q.term]&&s.cities.includes(q.city)&&(!s.ready||q.start>=s.ready);}
+  const labels = {pending:'待交款', preparing:'车辆准备中', delivering:'车辆交付', active:'使用中', completed:'已完成', inquiry:'意向已收到'};
+  const chosenPackage = (c=state.currentCar, config=state) => (vehiclePackages[c.id]||[]).find(p=>p.id===config.packageId)||(vehiclePackages[c.id]||[])[0];
+  const vehicleDeposit = () => state.depositWaived && state.verified ? 0 : 3000;
+  const firstPayment = o => o.monthly;
+  function normalizeTerm() {if(!state.currentCar.terms[state.term]) state.term = Number(Object.keys(state.currentCar.terms)[0]);}
+  function optionMonthly() {
+    const d=dataOf(),v=vehicleChoice();if(!d||!v)return 0;
+    return ['interiors','wheels'].reduce((sum,key)=>sum+(fitStatus(pickedItem(key)||{status:[]})==='optional'?(pickedItem(key)?.demoMonthly||0):0),0)+d.options.filter(x=>v.options.includes(x.id)&&fitStatus(x)==='optional').reduce((sum,x)=>sum+(x.demoMonthly||0),0);
+  }
+  function pricing(config=state) {
+    const c=state.currentCar,term=c.terms[config.term]?config.term:lowestTerm(c);
+    const base=c.terms[term],trim=chosenPackage(c,config)?.extra||0,options=optionMonthly(),mileage=({1500:-200,2500:0,3500:450}[config.mileage]||0),coverage=config.coverage==='premium'?399:0;
+    return {base,trim,options,mileage,coverage,monthly:base+trim+options+mileage+coverage,term};
+  }
+  function monthly(config=state) {return pricing(config).monthly;}
+  const total = config => monthly(config || state) * (config || state).term;
+
+  const dataOf = (c=state.currentCar) => vehicleData[c.id];
+  const trimIndex = () => dataOf().trims.findIndex(p=>p.id===chosenPackage().id);
+  const fitStatus = item => item.status[trimIndex()] || 'unavailable';
+  function normalizeVehicle() {
+    const d=dataOf();if(!d)return;
+    state.packageId=chosenPackage().id;
+    const choice=state.vehicleChoices[state.currentCar.id] ||= {color:d.colors[0][0],options:[]};
+    if(d.colorTrims?.[choice.color]&&!d.colorTrims[choice.color].includes(state.packageId))choice.color=d.colors[0][0];
+    for(const key of ['interiors','wheels']) {
+      const items=d[key]||[];
+      if(!items.some(item=>item.id===choice[key]&&fitStatus(item)!=='unavailable'))choice[key]=(items.find(item=>fitStatus(item)==='standard')||items.find(item=>fitStatus(item)!=='unavailable'))?.id||'';
+    }
+    choice.options=choice.options.filter(id=>d.options.some(item=>item.id===id&&fitStatus(item)==='optional'));
+  }
+  const vehicleChoice = () => state.vehicleChoices[state.currentCar.id];
+  const pickedItem = key => dataOf()?.[key]?.find(item=>item.id===vehicleChoice()?.[key]);
+  function configSummary() {
+    if(!dataOf())return state.currentCar.edition;
+    normalizeVehicle();const d=dataOf(),v=vehicleChoice();
+    return [chosenPackage().name,v.color,pickedItem('interiors')?.name,pickedItem('wheels')?.name,...d.options.filter(x=>v.options.includes(x.id)).map(x=>x.name)].filter(Boolean).join(' · ');
+  }
+  function selectCar(id,term) {
+    const c=cars.find(c=>c.id===id);if(!c)return false;
+    const same=state.currentCar.id===id;state.currentCar=c;
+    if(!same)state.packageId=state.vehicleChoices[id]?.packageId||'';
+    state.term=term||lowestTerm(c);normalizeTerm();normalizeVehicle();state.agreement=false;return true;
+  }
+
+  function save() {try {localStorage.setItem(storageKey, JSON.stringify({verified:state.verified,depositWaived:state.depositWaived,orders:state.orders,invoice:state.invoice}));} catch {toast('当前浏览器未开启本地保存，本次操作仍可继续');}}
+  function statusBar() {return `<div class="statusbar" aria-hidden="true"><span>9:41</span><div class="status-icons"><span class="signal"><i></i><i></i><i></i><i></i></span><span>5G</span><span class="battery"></span></div></div>`;}
+  function header(title, {back=true, right='support', status=true} = {}) {return `<div class="page-navigation">${status ? statusBar() : ''}<header class="page-head">${back?`<button class="icon-button" data-action="back" aria-label="返回">${icon('ChevronLeft')}</button>`:'<span></span>'}<h1>${title}</h1>${right?`<button class="icon-button" data-action="sheet" data-value="${right}" aria-label="${right==='settings'?'设置':right==='share'?'分享':'联系客服'}">${icon(right==='settings'?'Settings2':right==='share'?'Share':'Headset')}</button>` :'<span></span>'}</header></div>`;}
+  function nav() {return `<nav class="tabbar" aria-label="主导航">${[['home','首页','House'],['catalog','选车','CarFront'],['orders','订单','FileText'],['mine','我的','UserRound']].map(([key,label,i])=>`<button class="nav-item ${state.page===key?'active':''}" data-action="nav" data-value="${key}" ${state.page===key?'aria-current="page"':''}>${icon(i)}<span>${label}</span></button>`).join('')}</nav>`;}
+  function purchaseBar(label, action, {amount=total(), first=false, disabled=false, term=state.term,estimate=true}={}) {return `<div class="purchase-bar"><div class="bar-term"><small>订阅期</small>${term}个月</div><div class="bar-total"><small>${first?'首次应付':estimate?'预估总价':'合同总价'}</small>${price(amount)}</div><button class="primary" data-action="${action}" ${disabled?'disabled':''}>${label}</button></div>`;}
+  const pair = (label,value,strong=false) => `<div class="summary-pair${strong?' strong':''}"><span>${label}</span><b>${value}</b></div>`;
+  function rowCar(c) {const term = c.terms[state.term] ? state.term : Number(Object.keys(c.terms)[0]);return `<button class="vehicle-row" data-action="car" data-value="${c.id}"><div class="vehicle-thumb"><img src="${c.image}" alt="${c.name}" loading="lazy"></div><div class="vehicle-row-copy"><h3>${c.name}</h3><p class="descriptor">${c.energy} · ${c.transmission} · ${c.seats}</p><div class="pill-row">${c.tags.slice(0,2).map(t=>`<span class="tag">${t}</span>`).join('')}</div>${price(c.terms[term],'/月起')}</div></button>`;}
+  function homeVehicle(c) {
+    const term=homeTerm(c);
+    return `<article class="home-vehicle-row" data-home-car="${c.id}"><button class="home-vehicle-photo" data-action="home-car" data-value="${c.id}" aria-label="选配${carName(c)}"><img src="${dataOf(c)?.thumbnail||c.image}" alt="${carName(c)}"></button><div class="home-vehicle-copy"><button class="home-car-title" data-action="home-car" data-value="${c.id}"><h3>${carName(c)}</h3></button><p class="home-car-spec">${c.energy} · ${c.seats} · ${c.transmission}</p><div class="pill-row">${[c.tags[0],'含保险保养'].map(t=>`<span class="tag">${t}</span>`).join('')}</div><button class="home-car-price" data-action="home-car" data-value="${c.id}" aria-label="查看${carName(c)}${term}个月方案">${price(c.terms[term],'/月')}</button><div class="home-car-terms" aria-label="${carName(c)}订阅周期">${Object.keys(c.terms).map(t=>`<button class="${Number(t)===term?'active':''}" data-action="home-car-term" data-car="${c.id}" data-value="${t}" aria-pressed="${Number(t)===term}">${t}个月</button>`).join('')}</div></div></article>`;
+  }
+  function homeGuides() {return `<section class="home-guides"><div class="section-heading"><h2>订阅之前，你可能想了解</h2></div>${[['coverage','月费包含哪些服务？','保险、保养、救援与城市取送'],['deposit','怎样申请信用免押？','评估结果以实际审核为准'],['rules','到期想续订或换车怎么办？','提前联系管家，安排下一程']].map(([v,t,s])=>`<button class="home-guide-row" data-action="sheet" data-value="${v}"><span><strong>${t}</strong><small>${s}</small></span>${icon('ChevronRight',true)}</button>`).join('')}</section>`;}
+  function home() {
+    const picks=cars.filter(c=>c.featured);
+    return `<section class="home-immersive"><img class="home-visual" src="embedded-assets/asset-038.jpg" alt="白色电动车与浅色滨水建筑">${statusBar()}<header class="home-head"><div class="home-brand-group"><div class="brand">DD<em>订阅</em></div><span class="brand-caption">新车新生活</span></div><button class="icon-button" data-action="sheet" data-value="support" aria-label="联系顾问">${icon('Headset')}</button></header><div class="home-title"><h1>新车，为你而来</h1><p>选定心仪车款 · 开启订阅生活</p><span class="title-accent" aria-hidden="true"></span></div></section>
+    <main class="home-body home-light">
+      <section class="subscription-entries" aria-label="选择订阅方式">
+        <button class="subscription-entry entry-new" data-action="enter-catalog" data-value="new"><div><span class="entry-kicker">全新座驾</span><h2>新车订阅</h2><p>选配心仪座驾</p></div><span class="entry-link">选配新车 ${icon('ChevronRight',true)}</span></button>
+        <button class="subscription-entry entry-stock" data-action="enter-catalog" data-value="stock"><div><span class="entry-kicker">精选现车</span><h2>现车订阅</h2><p>精选在库车辆</p></div><span class="entry-link">查看现车 ${icon('ChevronRight',true)}</span></button>
+      </section>
+      <section class="popular-section home-popular"><div class="section-heading"><div><h2>热门新车订阅</h2></div><button data-action="enter-catalog" data-value="new">全部车型${icon('ChevronRight',true)}</button></div><div class="home-vehicle-list">${picks.map(homeVehicle).join('')}</div><button class="home-results-link" data-action="enter-catalog" data-value="new">探索更多新车订阅${icon('ChevronRight',true)}</button></section>
+      <section class="home-services" aria-label="订阅服务">${[['ShieldCheck','保险保障','全程安心'],['Wrench','保养维保','定期安排'],['TruckElectric','道路救援','7×24小时'],['House','送车上门','省时省心']].map(([i,t,n])=>`<button data-action="sheet" data-value="coverage">${icon(i)}<b>${t}</b><span>${n}</span></button>`).join('')}</section>${homeGuides()}
+    </main>`;
+  }
+  function catalogCard(c) {
+    const term=lowestTerm(c);
+    const photo=dataOf(c)?.catalogImage||window.STOCK_SHOWROOM[c.id]?.catalogImage||c.image;
+    return `<article class="catalog-card"><button class="catalog-image" data-action="car" data-value="${c.id}" aria-label="选择${carName(c)}订阅方案"><img src="${photo}" alt="${carName(c)}" loading="lazy"></button><button class="catalog-copy" data-action="car" data-value="${c.id}"><h2>${carName(c)}</h2><p class="descriptor">${c.energy} · ${c.seats}${c.newCar?' · '+vehiclePackages[c.id].length+'款车款':''}</p><div class="catalog-card-bottom">${price(c.terms[term],'/月起')}<span class="catalog-cta">${c.newCar?'选配置':'订阅方案'}${icon('ChevronRight',true)}</span></div></button></article>`;
+  }
+  function filteredCars() {
+    let list=cars.filter(c=>!c.retired&&(catalogMode()==='new'?c.newCar:!c.newCar)).sort((a,b)=>brandRank(a.brand)-brandRank(b.brand));
+    if(catalogMode()==='stock')list=list.filter(c=>demoSupply[c.id].cities.includes(state.city));
+    if(state.brand!=='all')list=list.filter(c=>c.brand===state.brand);
+    const q=state.search.trim().toLowerCase();
+    if(q)list=list.filter(c=>`${c.brand} ${c.name}`.toLowerCase().includes(q));
+    if(state.sort==='price')list.sort((a,b)=>a.terms[state.page==='searchResults'?state.catalogQuery.term:lowestTerm(a)]-b.terms[state.page==='searchResults'?state.catalogQuery.term:lowestTerm(b)]);
+    return list;
+  }
+  function catalogResults() {
+    const list=filteredCars(),query=state.page==='searchResults';
+    return list.map(catalogCard).join('') || `<div class="empty">${icon('Search')}<h2>暂未找到合适车型</h2><p>试试其他品牌${query?'，或调整用车条件':''}。</p><button class="secondary" data-action="clear-search">清除车型筛选</button>${query?'<button class="text-button" data-action="query-edit" data-value="date">调整用车日期</button>':''}</div>`;
+  }
+  function catalogFilters() {return `<button class="sort-button" data-action="sort">${state.sort==='price'?'价格从低到高':'月费排序'}${icon('ArrowDownUp',true)}</button>`;}
+  function carSearchField() {return `<label class="search-field">${icon('Search')}<input type="search" id="car-search" placeholder="搜索品牌或车型" value="${escape(state.search)}" aria-label="搜索品牌或车型"></label>`;}
+  function resultCount() {return `<span>${state.brand==='all'?'全部车型':state.brand} <b>${filteredCars().length}</b> 款</span>${catalogFilters()}`;}
+  function brandRail() {
+    const brands=['all',...[...new Set(cars.filter(c=>!c.retired&&(catalogMode()==='new'?c.newCar:!c.newCar)).map(c=>c.brand))].sort((a,b)=>brandRank(a)-brandRank(b))];
+    return `<aside class="brand-rail" aria-label="按品牌筛选">${brands.map(b=>`<button class="${state.brand===b?'active':''}" data-action="brand" data-value="${b}" aria-pressed="${state.brand===b}">${b==='all'?'全部品牌':b}</button>`).join('')}</aside>`;
+  }
+  function brandCatalogBody() {return `<div class="brand-catalog">${brandRail()}<div class="brand-results"><div class="catalog-summary" id="catalog-count">${resultCount()}</div><main class="catalog-list" id="catalog-results">${catalogResults()}</main></div></div>`;}
+  function catalog() {
+    return `${statusBar()}<header class="catalog-page-head"><button class="city-button" data-action="sheet" data-value="city" aria-label="选择用车城市">${state.city}${icon('ChevronDown',true)}</button><h1>订阅选车</h1><button class="icon-button" data-action="sheet" data-value="support" aria-label="联系客服">${icon('Headset')}</button></header><div class="catalog-controls">${carSearchField()}<div class="catalog-modes">${[['new','新车订阅'],['stock','现车订阅']].map(([v,t])=>`<button class="${state.browseCatalog===v?'active':''}" data-action="mode" data-value="${v}">${t}</button>`).join('')}</div></div>${brandCatalogBody()}`;
+  }
+  function searchResults() {return catalog();}
+  function packageSelector() {
+    const d=dataOf(),p=chosenPackage(),v=vehicleChoice();
+    const extraLabel=x=>x?'+'+money(x)+'/月':'方案已含';
+    return `<section class="package-section" aria-label="选配置"><h2 class="simple-heading">选配置</h2><div class="trim-grid">${d.trims.map(t=>`<button class="trim-card ${t.id===p.id?'active':''}" data-action="package" data-value="${t.id}" aria-pressed="${t.id===p.id}"><strong>${t.name}</strong><small>${t.trim}</small><em>${t.extra?'+'+money(t.extra)+'/月':'基础车款'}</em></button>`).join('')}</div><div class="paint-heading"><span>外观颜色</span><b>${v.color}</b></div><div class="paint-swatches">${d.colors.map(([name,color])=>`<button class="paint-swatch ${v.color===name?'active':''}" style="--paint:${color}" data-action="paint" data-value="${name}" aria-label="${name}" ${d.colorTrims?.[name]&&!d.colorTrims[name].includes(p.id)?'disabled':''} aria-pressed="${v.color===name}"><span></span></button>`).join('')}</div>
+    ${[['interiors','内饰'],['wheels','轮毂']].filter(([key])=>d[key].length).map(([key,title])=>`<div class="inline-choice-group"><h3>${title}</h3><div class="compact-options">${d[key].map(item=>`<button class="compact-choice ${v[key]===item.id?'active':''}" data-action="choose-equipment" data-key="${key}" data-value="${item.id}" ${fitStatus(item)==='unavailable'?'disabled':''} aria-pressed="${v[key]===item.id}"><strong>${item.name}</strong><small>${fitStatus(item)==='unavailable'?'此车款不支持':extraLabel(fitStatus(item)==='optional'?item.demoMonthly:0)}</small></button>`).join('')}</div></div>`).join('')}
+    ${d.options.length?`<div class="inline-choice-group"><h3>选装装备</h3><div class="inline-equipment">${d.options.map(item=>{const status=fitStatus(item),selected=v.options.includes(item.id)||status==='standard';return `<button class="equipment-item ${selected?'active':''}" data-action="toggle-equipment" data-value="${item.id}" ${status!=='optional'?'disabled':''} aria-pressed="${selected}"><span><strong>${item.name}</strong><small>${status==='unavailable'?'此车款不支持':status==='standard'?'方案已含':extraLabel(item.demoMonthly)}</small></span><span class="equipment-check">${selected?icon('Check',true):''}</span></button>`;}).join('')}</div></div>`:''}<p class="standard-features">${p.features.join(' · ')}</p></section>`;
+  }
+  function inlinePlan() {
+    const c=state.currentCar;
+    return `<section class="inline-plan" aria-label="订阅方案"><h2 class="simple-heading">订阅方案</h2><div class="inline-choice-group"><h3>订阅周期</h3><div class="options ${Object.keys(c.terms).length===2?'two':''}">${Object.entries(c.terms).map(([t,p])=>`<button class="option ${state.term===Number(t)?'active':''}" data-action="plan-option" data-key="term" data-value="${t}" aria-pressed="${state.term===Number(t)}"><b>${t}个月</b><small>${money(monthly({...state,term:Number(t)}))}/月</small></button>`).join('')}</div></div><div class="inline-choice-group"><h3>每月里程</h3><div class="options">${[1500,2500,3500].map(m=>`<button class="option ${state.mileage===m?'active':''}" data-action="plan-option" data-key="mileage" data-value="${m}" aria-pressed="${state.mileage===m}"><b>${number(m)}<em>公里</em></b><small>${money(monthly({...state,mileage:m}))}/月</small></button>`).join('')}</div><p class="compact-note">超出套餐里程 ¥1/公里</p></div><div class="inline-choice-group"><h3>保障方案</h3><div class="compact-options">${[['care','安心保障','月费已含'],['premium','无忧保障','+¥399/月']].map(([v,t,n])=>`<button class="compact-choice ${state.coverage===v?'active':''}" data-action="plan-option" data-key="coverage" data-value="${v}" aria-pressed="${state.coverage===v}"><strong>${t}</strong><small>${n}</small></button>`).join('')}</div><button class="text-button compact-note" data-action="sheet" data-value="coverage">保障说明 ${icon('ChevronRight',true)}</button></div><div class="inline-choice-group"><h3>交付方式</h3><div class="compact-options">${[['door','送车上门'],['store','门店取车']].map(([v,t])=>`<button class="compact-choice ${state.delivery===v?'active':''}" data-action="plan-option" data-key="delivery" data-value="${v}" aria-pressed="${state.delivery===v}"><strong>${t}</strong><small>服务区域内免费</small></button>`).join('')}</div></div></section>`;
+  }
+  function priceBreakdown() {
+    const p=pricing();
+    return `<section class="fee-panel live-price" aria-live="polite"><h2 class="simple-heading">费用明细</h2>${pair('基础月费',money(p.base))}${p.trim?pair('车款升级',money(p.trim)+'/月'):''}${p.options?pair('选装装备',money(p.options)+'/月'):''}${pair('里程套餐',p.mileage===0?'已包含':(p.mileage>0?'+':'−')+money(Math.abs(p.mileage))+'/月')}${pair('保障服务',p.coverage?'+'+money(p.coverage)+'/月':'已包含')}<div class="fee-columns"><div><small>参考月费</small><strong>${money(p.monthly)}</strong></div><div><small>${p.term}个月预估总价</small><strong>${money(p.monthly*p.term)}</strong></div></div><p>演示测算，最终以管家确认的订阅报价为准。</p></section>`;
+  }
+  function equipment() {
+    const d=dataOf(),v=vehicleChoice(),p=chosenPackage();
+    return `${header('选装装备',{right:null})}<main class="equipment-page"><h2>${carName(state.currentCar)}</h2><p class="equipment-trim">${p.name}</p><div class="equipment-list">${d.options.map(item=>{const status=fitStatus(item),selected=v.options.includes(item.id);return `<button class="equipment-item ${selected?'active':''}" data-action="toggle-equipment" data-value="${item.id}" ${status==='optional'?'':'disabled'} aria-pressed="${selected||status==='standard'}"><span><strong>${item.name}</strong><small>${status==='standard'?'本车款标配':status==='unavailable'?'本车款不可选':'可选装'}</small></span><span class="equipment-check">${selected||status==='standard'?icon('Check',true):''}</span></button>`;}).join('')}</div><p class="option-price-note">选装费用随正式订阅报价确认</p></main>`;
+  }
+  function configurationSheet(key) {
+    const title=key==='interiors'?'选择内饰':'选择轮毂';
+    return sheetFrame(title,`<div class="equipment-list">${dataOf()[key].map(item=>{const status=fitStatus(item);return `<button class="equipment-item ${vehicleChoice()[key]===item.id?'active':''}" data-action="choose-equipment" data-key="${key}" data-value="${item.id}" ${status==='unavailable'?'disabled':''}><span><strong>${item.name}</strong><small>${status==='standard'?'本车款标配':status==='unavailable'?'本车款不可选':'可选'}${item.note?' · '+item.note:''}</small></span><span class="equipment-check">${vehicleChoice()[key]===item.id?icon('Check',true):''}</span></button>`;}).join('')}</div>`);
+  }
+  const showroomOf = (c=state.currentCar) => dataOf(c)||window.STOCK_SHOWROOM?.[c.id];
+  function galleryOf(c=state.currentCar) {return showroomOf(c)?.gallery||[[c.image,'车辆外观']];}
+  function vehicleInfo() {
+    const c=state.currentCar,d=showroomOf(c),gallery=galleryOf(c),index=Math.min(state.galleryIndex,gallery.length-1);
+    const specs=d?.specs||[['能源',c.energy],[c.rangeLabel,c.range],['座位',c.seats],['变速箱',c.transmission]];
+    return `${header('车辆详情',{right:null})}<section class="showroom-gallery"><div class="gallery-stage"><img src="${gallery[index][0]}" alt="${carName(c)} · ${gallery[index][1]}">${gallery.length>1?`<button class="gallery-arrow prev" data-action="gallery-step" data-value="-1" aria-label="上一张">${icon('ChevronLeft')}</button><button class="gallery-arrow next" data-action="gallery-step" data-value="1" aria-label="下一张">${icon('ChevronRight')}</button>`:''}<span class="gallery-count">${index+1} / ${gallery.length}</span></div><div class="gallery-dots">${gallery.map((item,i)=>`<button class="${i===index?'active':''}" data-action="gallery" data-value="${i}" aria-label="查看${item[1]}" aria-pressed="${i===index}"></button>`).join('')}</div></section><main class="showroom-body"><section class="showroom-model"><p>${c.brand} · ${d?.year||c.year}</p><h1>${carName(c)}</h1><div class="showroom-specs">${specs.map(([l,v])=>`<div><small>${l}</small><strong>${v}</strong></div>`).join('')}</div></section>${d?.features.length?`<section class="showroom-features"><h2>车型介绍</h2><div class="feature-mosaic">${d.features.map(([src,title],i)=>`<figure class="${i===2?'wide':''}"><img src="${src}" alt="${title}" loading="lazy"><figcaption>${title}</figcaption></figure>`).join('')}</div></section>`:''}${d?.trims?.length?`<section class="showroom-versions"><h2>车款一览</h2>${d.trims.map(t=>`<div><strong>${t.name}</strong><p>${t.trim}</p></div>`).join('')}</section>`:''}${d?.dimensions?`<div class="showroom-dimensions"><span>长 × 宽 × 高</span><strong>${d.dimensions}</strong></div>`:''}<p class="showroom-source">${d?d.source:'车型外观展示'}<br>图片展示不对应所选颜色及选装组合</p></main>`;
+  }
+  function detail() {
+    const c=state.currentCar;normalizeTerm();normalizeVehicle();
+    return `${header('订阅方案',{right:'share'})}<section class="detail-hero"><div class="detail-photo"><img src="${c.image}" alt="${carName(c)}"><button class="vehicle-detail-link" data-action="vehicle" data-value="${c.id}">车辆详情 ${icon('ChevronRight',true)}</button></div></section><main class="detail-body"><section class="model-overview"><div><h1>${carName(c)}</h1><p class="model-edition">${c.newCar?dataOf().year:c.edition}</p></div><div class="reference-price"><small>参考月费</small>${price(monthly(),'/月起')}</div></section>
+    ${c.newCar?packageSelector():''}
+    ${inlinePlan()}<p class="included-line">含保险、保养、道路救援及城市取送</p>
+    <section class="delivery-grid"><button class="delivery-cell" data-action="sheet" data-value="address"><small>交付地点</small><strong>${escape(state.address)}${icon('ChevronRight',true)}</strong><span>${deliveryName(state.delivery)}</span></button>${c.newCar?'<div class="delivery-cell"><small>交付时间</small><strong>待顾问确认</strong></div>':`<button class="delivery-cell" data-action="sheet" data-value="date"><small>开始用车</small><strong>${dateLabel(state.start)} ${state.time}${icon('ChevronRight',true)}</strong></button>`}</section>
+    ${contactFields()}
+    <button class="deposit-line" data-action="sheet" data-value="deposit"><span class="tag accent">可申请信用免押</span><span>押金待评估</span>${icon('ChevronRight',true)}</button>
+    ${priceBreakdown()}<div class="fine-links"><button data-action="sheet" data-value="rules">订阅规则</button><button data-action="sheet" data-value="support">咨询顾问</button></div></main>`;
+  }
+  function miniCar(c,text='',packageName='') {return `<div class="mini-car"><img src="${c.image}" alt="${carName(c)}"><div><h2>${carName(c)}</h2><p>${packageName||(c.newCar?'全新车':c.edition)}${text?`<br>${text}`:''}</p></div></div>`;}
+
+  function config() {const c=state.currentCar,d=state.configDraft;return `${header('调整订阅方案',{right:null})}<main class="page-pad stack"><section class="card">${miniCar(c,'',chosenPackage(c,d)?.name)}</section><section class="config-section"><h2>订阅期限</h2><div class="options ${Object.keys(c.terms).length===2?'two':''}">${Object.entries(c.terms).map(([t,p])=>`<button class="option ${d.term===Number(t)?'active':''}" data-action="config-option" data-key="term" data-value="${t}" aria-pressed="${d.term===Number(t)}"><b>${t}个月</b><small>${money(p)}/月起</small></button>`).join('')}</div></section><section class="config-section"><h2>每月里程</h2><div class="options">${[[1500,'轻度通勤'],[2500,'日常通勤'],[3500,'高频出行']].map(([v,t])=>`<button class="option ${d.mileage===v?'active':''}" data-action="config-option" data-key="mileage" data-value="${v}" aria-pressed="${d.mileage===v}"><b>${number(v)}km</b><small>${t}</small></button>`).join('')}</div><p class="config-note">1,500公里方案减¥200/月，3,500公里方案加¥450/月；超里程按¥1/公里结算。</p></section><section class="config-section"><h2>保障方案</h2>${[['care','安心保障','基础车损、第三者责任保障及道路救援','已包含'],['premium','无忧保障','增加轮胎玻璃保障，降低事故自付额度','+¥399/月']].map(([v,t,desc,p])=>`<button class="choice-row ${d.coverage===v?'active':''}" data-action="config-option" data-key="coverage" data-value="${v}" aria-pressed="${d.coverage===v}"><div><h3>${t}</h3><p>${desc}</p></div><span>${p}</span></button>`).join('')}<button class="text-button" data-action="sheet" data-value="coverage">查看保障说明</button></section><section class="config-section"><h2>交付方式</h2><div class="options two">${[['door','送车上门','到你指定的地点'],['store','门店取车','到服务网点办理']].map(([v,t,desc])=>`<button class="option ${d.delivery===v?'active':''}" data-action="config-option" data-key="delivery" data-value="${v}" aria-pressed="${d.delivery===v}"><b>${t}</b><small>${desc}</small></button>`).join('')}</div></section></main>`;}
+  const maskedPhone = phone => /^1\d{10}$/.test(phone||'') ? phone.slice(0,3)+'****'+phone.slice(-4) : '未填写';
+  const contactNotice = order => order?.driverPhone ? `顾问将联系手机尾号 ${escape(order.driverPhone.slice(-4))}，确认报价与交付。` : '顾问将与你联系，确认报价与交付。';
+  function contactFields() {
+    return `<section class="contact-section" aria-labelledby="contact-heading"><h2 class="simple-heading" id="contact-heading">用车人</h2>${[['name','姓名','driverName','请输入用车人姓名','text','name',40],['phone','手机号','driverPhone','请输入11位手机号','tel','tel-national',11]].map(([id,label,key,placeholder,type,autocomplete,max])=>`<div class="contact-field"><label for="driver-${id}">${label}</label><div><input id="driver-${id}" name="${key}" type="${type}" ${type==='tel'?'inputmode="tel"':''} autocomplete="${autocomplete}" maxlength="${max}" required value="${escape(state[key])}" placeholder="${placeholder}" aria-describedby="${id}-error" aria-invalid="${!!state.contactErrors[key]}"><p class="field-error" id="${id}-error" role="alert">${escape(state.contactErrors[key]||'')}</p></div></div>`).join('')}</section>`;
+  }
+  function focusContact(key='driverName') {
+    const field=$(`[name="${key}"]`);if(!field)return;
+    field.closest('.contact-field').scrollIntoView({block:'center'});field.focus({preventScroll:true});
+  }
+  function validateContact() {
+    state.driverName=state.driverName.trim();state.driverPhone=state.driverPhone.trim();
+    state.contactErrors={};
+    if(!state.driverName||state.driverName.length>40)state.contactErrors.driverName='请填写用车人姓名';
+    if(!/^1[3-9]\d{9}$/.test(state.driverPhone))state.contactErrors.driverPhone='请输入有效的11位手机号';
+    const invalid=Object.keys(state.contactErrors)[0];
+    if(!invalid)return true;
+    if(state.page!=='detail'){if(state.backStack.at(-1)?.page==='detail')back();else go('detail');}
+    for(const [key,id] of [['driverName','name'],['driverPhone','phone']]){
+      $(`[name="${key}"]`)?.setAttribute('aria-invalid',String(!!state.contactErrors[key]));
+      const error=$(`#${id}-error`);if(error)error.textContent=state.contactErrors[key]||'';
+    }
+    focusContact(invalid);return false;
+  }
+  function confirm() {
+    const c=state.currentCar,p=chosenPackage();
+    return `${header('确认订阅意向',{right:null})}<main class="confirm-main intent-main"><section>${miniCar(c,c.newCar?vehicleChoice().color:c.status,p?.name)}${c.newCar?`<p class="intent-configuration">${escape(configSummary())}</p>`:''}</section>
+    <section><h2>交付安排</h2>${pair('交付方式',deliveryName(state.delivery))}<button class="editable-pair" data-action="sheet" data-value="address"><span>交付地点</span><b>${escape(state.address)}${icon('ChevronRight',true)}</b></button>${c.newCar?pair('交付时间','待顾问确认'):`<button class="editable-pair pickup-time" data-action="sheet" data-value="date"><span>开始用车</span><b>${dateLabel(state.start)} ${state.time}${icon('ChevronRight',true)}</b></button>`}</section>
+    <section class="contact-summary"><div class="section-heading"><h2>用车人</h2><button data-action="edit-contact">修改${icon('ChevronRight',true)}</button></div>${pair('姓名',escape(state.driverName))}${pair('手机号',maskedPhone(state.driverPhone))}</section>
+    <section><h2>订阅方案</h2>${pair('订阅周期',state.term+'个月')}${pair('每月里程',number(state.mileage)+'公里')}${pair('保障服务',coverageName(state.coverage))}${pair('参考月费',money(monthly())+'/月')}${pair('预估总价',money(total()))}${pair('车辆押金','待信用评估')}<p class="intent-notice">提交意向无需支付，顾问将联系你确认报价与交付。</p></section>
+    <div class="agreement"><input id="agreement" type="checkbox" ${state.agreement?'checked':''} aria-label="同意提交订阅意向"><span>已阅读并同意<button data-action="sheet" data-value="intent-rules">《订阅意向说明》</button>及<button data-action="sheet" data-value="privacy">《隐私与授权说明》</button>，同意顾问联系。</span></div></main>`;
+  }
+  function mine() {const o=state.orders.find(x=>x.status==='active')||state.orders[0],c=o?carOf(o):null;return `${header('我的',{back:false,right:'settings'})}<main class="page-pad stack"><button class="profile-card" data-action="sheet" data-value="identity"><span class="avatar" aria-hidden="true"></span><div class="profile-info"><h2>尾号5185</h2><span class="tag accent">${state.verified?'已认证':'待完善'}</span><p>${state.verified?(state.depositWaived?'信用免押资格已开通':'身份与驾驶资格已核验'):'完善实名与驾驶人信息'}</p></div>${icon('ChevronRight')}</button><section class="card mine-orders"><div class="section-heading"><h2>我的订单</h2><button data-action="orders-filter" data-value="all">全部订单${icon('ChevronRight',true)}</button></div><div class="mine-grid">${[['inquiry','FileText','订阅意向'],['preparing','Truck','待交付'],['active','CarFront','订阅中'],['completed','CircleCheck','已完成']].map(([v,i,t])=>`<button class="mine-entry" data-action="orders-filter" data-value="${v}">${icon(i)}<span>${t}</span></button>`).join('')}</div></section>${o?`<section class="subscription-summary"><div class="mini-car"><img src="${c.image}" alt="${c.name}"><div style="flex:1;min-width:0"><div class="summary-state"><h2>${c.name}</h2><span class="tag accent">${labels[o.status]}</span></div><div class="subscription-facts"><div><small>${o.status==='active'?'下次付款':'预计交付'}</small><strong>${(o.status==='active'?(nextRentBill(o)?dateLabel(nextRentBill(o).date):'已缴清'):o.status==='inquiry'?'待确认':dateLabel(o.start))}</strong></div><div><small>订阅周期</small><strong>${o.term}个月</strong></div></div></div></div><button class="text-button" data-action="order" data-value="${o.id}">查看详情${icon('ChevronRight',true)}</button></section>`:''}<section class="card menu-card">${[['identity','IdCard','身份与驾驶人'],['contracts','FileText','合同中心'],['invoice','ReceiptText','账单与发票'],['deposit','ShieldCheck','信用与押金'],['support','Headset','联系客服']].map(([v,i,t])=>`<button class="menu-row" data-action="sheet" data-value="${v}">${icon(i)}<span>${t}</span>${icon('ChevronRight',true)}</button>`).join('')}</section><p class="mine-footer">DD订阅 · 让用车更轻松</p></main>`;}
+  function rentBills(o) {
+    return Array.from({length:o.term},(_,i)=>{
+      const period=i+1,record=(o.rentPayments||[]).find(p=>p.period===period);
+      return {period,date:endDate(o.start,i),amount:o.monthly,paid:!!record||(period===1&&o.paid),record};
+    });
+  }
+  const nextRentBill = o => rentBills(o).find(b=>!b.paid);
+  function billingPanel(o) {
+    const bill=nextRentBill(o);
+    return `<section class="card billing-panel"><div class="section-heading"><h2>月租账单</h2><button data-action="sheet" data-value="bills">全部账单${icon('ChevronRight',true)}</button></div><div class="next-bill"><div><small>${bill?'下一待缴 · 第'+bill.period+'/'+o.term+'期':'合同内月租已全部缴清'}</small><strong>${bill?money(bill.amount):money(0)}</strong><p>${bill?'应付日期 '+fullDateLabel(bill.date):'不影响原订阅期限'}</p></div><button class="primary" data-action="prepay" data-value="${o.id}" ${bill?'':'disabled'}>${bill?'提前交款':'已缴清'}</button></div><button class="debit-setting" data-action="auto-debit" data-value="${o.id}"><span>绑卡自动扣款<small>${o.autoDebit?'已开启 · 示例银行卡 尾号6688':'未开启 · 到期自动支付未缴月租'}</small></span><b>${o.autoDebit?'管理':'去开通'}${icon('ChevronRight',true)}</b></button><p class="demo-disclaimer">提前支付的期次不会重复扣款，不延长合同期限。</p></section>`;
+  }
+  function progressPanel(o) {
+    const stages=[['inquiry','意向已收到'],['pending','交款'],['preparing','车辆准备中'],['delivering','车辆交付']];
+    const index=stages.findIndex(([key])=>key===o.status);
+    return `<section class="card order-progress"><div class="section-heading"><h2>订阅进度</h2></div><ol class="progress-track">${stages.map(([key,label],i)=>`<li class="${i<=index?'reached':''} ${i===index?'current':''}" ${i===index?'aria-current="step"':''}><span>${i<index?icon('Check',true):i+1}</span><b>${label}</b></li>`).join('')}</ol></section>`;
+  }
+  function vehicleService(o,c) {
+    const used=o.currentMileage||186,odometer=o.odometer||(c.newCar?186:8686);
+    return `<section class="card vehicle-service"><div class="section-heading"><h2>用车服务</h2></div><div class="vehicle-identity"><strong>${carName(c)}</strong><span>沪A·D5185 · ${c.energy} · ${c.seats}</span></div><div class="vehicle-metrics"><div><small>车辆总里程</small><strong>${number(odometer)}<em>km</em></strong></div><div><small>本期已用</small><strong>${number(used)}<em>km</em></strong></div><div><small>本期额度</small><strong>${number(o.mileage)}<em>km</em></strong></div></div><div class="mileage-meter"><div style="width:${Math.min(100,used/o.mileage*100)}%"></div></div><p class="hint">本期剩余 ${number(Math.max(0,o.mileage-used))} 公里</p><div class="service-list">${[['保养预约','预约维保时间'],['事故报备','协助处理事故'],['道路救援','联系救援管家'],['续订 / 换车 / 归还','安排下一程']].map(([t,n])=>`<button data-action="service" data-value="${t}"><span><strong>${t}</strong><small>${n}</small></span>${icon('ChevronRight',true)}</button>`).join('')}</div></section>`;
+  }
+  function orderCard(o) {
+    const c=carOf(o),active=o.status==='active',bill=active?nextRentBill(o):null;
+    const detailLabel=o.status==='pending'?'去交款':active?(bill?'查看详情':'用车服务'):o.status==='completed'?'查看详情':'查看进度';
+    return `<article class="order-card"><div class="order-top"><span>${c.newCar?'新车订阅':'现车订阅'} · ${o.id.slice(-8)}</span><span class="order-status">${labels[o.status]}</span></div><button class="order-summary-link" data-action="order" data-value="${o.id}">${miniCar(c,`${o.term}个月 · ${number(o.mileage)}公里/月`,o.packageName)}<div class="order-price">${price(o.monthly,'/月'+(o.status==='inquiry'?' · 预估':''))}</div></button>${active?`<p class="order-bill-hint">${bill?'第'+bill.period+'期 · '+dateLabel(bill.date)+'应付 '+money(bill.amount):'合同内月租已缴清'}</p>`:''}<div class="order-actions"><button class="${active&&bill?'secondary':'primary'}" data-action="order" data-value="${o.id}">${detailLabel}</button>${active&&bill?`<button class="primary" data-action="prepay" data-value="${o.id}">提前交款</button>`:''}</div></article>`;
+  }
+  function orders() {
+    const list=state.orders.filter(o=>state.orderFilter==='all'||o.status===state.orderFilter||(state.orderFilter==='preparing'&&o.status==='delivering'));
+    return `${header('我的订单',{back:false})}<main class="page-pad"><nav class="order-tabs" aria-label="订单状态">${[['all','全部'],['inquiry','意向'],['pending','待交款'],['preparing','待交付'],['active','使用中'],['completed','已完成']].map(([v,t])=>`<button class="${state.orderFilter===v?'active':''}" data-action="orders-filter" data-value="${v}">${t}</button>`).join('')}</nav>${list.length?list.map(orderCard).join(''):`<div class="empty">${icon('FileText')}<h2>暂无相关订单</h2><p>选一辆喜欢的车，开始轻松用车。</p><button class="secondary" data-action="enter-catalog" data-value="new">去选车</button></div>`}</main>`;
+  }
+  function firstPaymentPanel(o) {
+    return `<section class="card first-payment-panel"><p class="eyebrow">首期账单 · 待交款</p><div class="first-bill-amount">${price(firstPayment(o))}<span>第1期 / 共${o.term}期</span></div>${pair('本次支付','仅首期月费')}${pair('剩余月租',money(o.monthly*(o.term-1))+' · 分期支付')}${pair('报价编号',o.quoteId||'待管家确认')}<p class="compact-note">无需绑卡，后续可自愿开通自动扣款。</p></section>`;
+  }
+  function preparationPayment(o) {
+    return `<section class="card"><div class="section-heading"><h2>首期已交款</h2><span class="paid-mark">${money(o.monthly)}</span></div><p class="compact-note">车辆准备中，交付安排由管家确认。</p><button class="debit-setting" data-action="auto-debit" data-value="${o.id}"><span>自动扣款<small>${o.autoDebit?'已开启 · 示例银行卡尾号6688':'可选开通 · 不影响车辆准备'}</small></span><b>${o.autoDebit?'管理':'去开通'}${icon('ChevronRight',true)}</b></button><button class="text-button" data-action="sheet" data-value="bills">查看账单${icon('ChevronRight',true)}</button></section>`;
+  }
+  function orderDetail() {
+    const o=selectedOrder();if(!o)return orders();const c=carOf(o),active=o.status==='active';
+    const records=['active','completed'].includes(o.status)?(o.services||[]).filter(n=>n.type!=='管家咨询'):[];
+    return `${header('订阅订单')}<main class="page-pad stack"><section class="status-copy"><p class="eyebrow">${c.newCar?'新车订阅':'现车订阅'}</p><h2>${labels[o.status]}</h2>${o.status==='inquiry'?`<p>${contactNotice(o)}</p>`:''}</section>
+    ${['inquiry','pending','preparing','delivering'].includes(o.status)?progressPanel(o):''}
+    <section class="card">${miniCar(c,`${o.term}个月 · ${money(o.monthly)}/月`,o.packageName)}<div class="divider" style="margin:16px 0 8px"></div>${pair('订单编号',o.id)}${o.packageSummary?pair('选配信息',escape(o.packageSummary)):''}${pair(o.status==='inquiry'?'预估总价':'合同总价',money(o.monthly*o.term))}${pair('车辆押金',o.deposit==null?'待信用评估':money(o.deposit)+(o.deposit?' · 按合同另行安排':' · 信用免押'))}</section>
+    ${o.status==='pending'?firstPaymentPanel(o):o.status==='preparing'?preparationPayment(o):''}${active?billingPanel(o)+vehicleService(o,c):''}
+    ${records.length?`<section class="card"><div class="section-heading"><h2>服务记录</h2></div>${records.map(n=>`<div class="service-record"><b>${escape(n.type)} · 已受理</b><p>${escape(n.note)}<br>${escape(n.date)}</p></div>`).join('')}</section>`:''}
+    <section class="card"><h2 class="info-heading">交付信息</h2>${pair('用车人',escape(o.driverName||'未填写'))}${pair('手机号',maskedPhone(o.driverPhone))}${pair('交付时间',c.newCar&&!active?'待确认':fullDateLabel(o.start)+' '+(o.time||'10:00'))}${pair('交付方式',deliveryName(o.delivery))}${pair('交付地点',escape(o.address))}${pair('保障方案',coverageName(o.coverage))}${pair('订阅期限',o.term+'个月')}${active?pair('合同到期',fullDateLabel(endDate(o.start,o.term))):''}${o.status!=='inquiry'?'<button class="text-button" data-action="sheet" data-value="contracts">查看订阅合同</button>':''}</section></main>`;
+  }
+  function addressPicker() {
+    const draft=state.addressDraft;
+    return `${header('交付地点',{right:null})}<main class="address-page"><p class="address-mode">${deliveryName(state.delivery)}</p><section class="address-card"><button class="address-city-row" data-action="sheet" data-value="city"><span>用车城市</span><strong>${escape(draft.city)}${icon('ChevronRight',true)}</strong></button><label class="address-field" for="delivery-address">${state.delivery==='door'?'送车地点':'取车网点'}</label><textarea id="delivery-address" name="deliveryAddress" rows="3" maxlength="100" placeholder="${state.delivery==='door'?'填写区、街道及详细地址':'填写取车网点名称或地址'}" aria-describedby="address-error" aria-invalid="false">${escape(draft.address)}</textarea><p class="field-error" id="address-error" role="alert"></p></section></main>`;
+  }
+  const pickingAddressCity = () => state.backStack.at(-1)?.page==='addressPicker' && !!state.addressDraft;
+  const pickerCity = () => pickingAddressCity() ? state.addressDraft.city : state.city;
+  function cityButton(name) {return `<button class="city-tile ${pickerCity()===name?'selected':''}" data-action="city" data-value="${name}">${name}</button>`;}
+  function cityResults() {
+    const q=state.cityQuery.trim().toLowerCase();
+    if(q){const results=cities.filter(c=>c.name.includes(q)||c.pinyin.includes(q));return `<section class="city-search-results"><h2>搜索结果</h2>${results.length?results.map(c=>`<button class="city-result" data-action="city" data-value="${c.name}"><span>${c.name}</span>${pickerCity()===c.name?icon('Check',true):icon('ChevronRight',true)}</button>`).join(''):'<div class="city-empty"><p>没有找到相关城市</p><span>试试城市中文名或完整拼音</span><button data-action="clear-city-search">清空搜索</button></div>'}</section>`;}
+    return `<section class="location-section"><div class="city-section-title"><h2>当前定位城市</h2><button data-action="relocate">${icon('RotateCw',true)}重新定位</button></div><button class="located-city" data-action="city" data-value="${state.locatedCity}">${icon('MapPin')}<strong>${state.locatedCity}</strong></button></section><section class="recent-cities"><h2>最近访问</h2><div class="city-grid">${state.recentCities.map(cityButton).join('')}</div></section><section class="city-index"><h2>字母索引</h2><div class="alphabet-grid">${cityLetters.map(l=>`<button data-action="city-index" data-value="${l}">${l}</button>`).join('')}</div></section><section class="city-groups"><h2>选择城市</h2>${cityLetters.map(l=>`<section class="city-group" id="city-group-${l}"><h3>${l}</h3><div class="city-grid">${cities.filter(c=>c.letter===l).map(c=>cityButton(c.name)).join('')}</div></section>`).join('')}</section>`;
+  }
+  function cityPicker() {return `<div class="picker-sticky">${statusBar()}<header class="city-search-head"><button class="icon-button" data-action="back" aria-label="返回">${icon('ChevronLeft')}</button><label class="city-search-field">${icon('Search')}<input type="search" id="city-search" value="${escape(state.cityQuery)}" placeholder="输入城市名称或拼音" aria-label="搜索城市" autocomplete="off"></label></header></div><main class="city-content" id="city-content">${cityResults()}</main>`;}
+  function calendarMonth(offset) {
+    const first=new Date(2026,9+offset,1,12),year=first.getFullYear(),month=first.getMonth(),days=new Date(year,month+1,0).getDate();
+    return `<section class="calendar-month"><h2>${year}年${month+1}月</h2><div class="calendar-grid">${'<span class="calendar-blank" aria-hidden="true"></span>'.repeat(first.getDay())}${Array.from({length:days},(_,i)=>{const value=isoDate(new Date(year,month,i+1,12));const selected=value===state.dateDraft.date;return `<button class="calendar-day${selected?' selected':''}" data-action="calendar-date" data-value="${value}" ${value<earliestDelivery?'disabled':''} aria-label="${year}年${month+1}月${i+1}日" aria-pressed="${selected}"><span>${value===demoToday?'今天':i+1}</span><small>${selected?'开始用车':''}</small></button>`;}).join('')}</div></section>`;
+  }
+  function datePicker() {return `<div class="picker-sticky">${header('选择开始用车日期',{right:null})}<div class="calendar-week">${['日','一','二','三','四','五','六'].map(d=>`<span>${d}</span>`).join('')}</div></div><main class="calendar-content"><p class="calendar-hint">按月订阅，到期日根据订阅周期自动计算</p>${Array.from({length:state.calendarMonths},(_,i)=>calendarMonth(i)).join('')}${state.calendarMonths<12?'<button class="calendar-more" data-action="more-months">查看更多月份 '+icon('ChevronDown',true)+'</button>':''}</main>`;}
+  function timeWheel(key,values) {return `<div class="time-wheel" data-time-wheel="${key}" role="listbox" tabindex="0" aria-label="${key==='hour'?'交付小时':'交付分钟'}">${values.map(v=>`<button class="time-option ${state.dateDraft[key]===v?'active':''}" data-action="time-option" data-key="${key}" data-value="${v}" role="option" aria-selected="${state.dateDraft[key]===v}">${String(v).padStart(2,'0')}</button>`).join('')}</div>`;}
+  function dateSummary() {const d=state.dateDraft;return `<strong>${dateLabel(d.date)} ${draftTime()}</strong><span>到期 ${fullDateLabel(endDate(d.date,state.term))}</span>`;}
+  function calendarFooter() {return `<section class="calendar-footer"><div class="time-title"><h2>交付时间</h2><span>服务时段 09:00–18:45</span></div><div class="time-picker"><div class="time-highlight" aria-hidden="true"></div>${timeWheel('hour',Array.from({length:10},(_,i)=>i+9))}<span class="time-colon">:</span>${timeWheel('minute',[0,15,30,45])}</div><div class="calendar-confirm"><div id="date-summary">${dateSummary()}</div><button class="primary" data-action="confirm-date">确认 · ${state.term}个月</button></div></section>`;}
+  function refreshTimeSelection() {if(state.page!=='datePicker')return;fixed.querySelectorAll('.time-option').forEach(b=>{const selected=state.dateDraft[b.dataset.key]===Number(b.dataset.value);b.classList.toggle('active',selected);b.setAttribute('aria-selected',selected);});$('#date-summary').innerHTML=dateSummary();}
+  function syncTimeWheels() {
+    fixed.querySelectorAll('[data-time-wheel]').forEach(wheel=>{
+      const values=[...wheel.querySelectorAll('button')].map(b=>Number(b.dataset.value));
+      wheel.scrollTop=values.indexOf(state.dateDraft[wheel.dataset.timeWheel])*32;
+      let timer;
+      wheel.addEventListener('scroll',()=>{clearTimeout(timer);timer=setTimeout(()=>{if(!wheel.isConnected||state.page!=='datePicker')return;const index=Math.max(0,Math.min(values.length-1,Math.round(wheel.scrollTop/32)));state.dateDraft[wheel.dataset.timeWheel]=values[index];refreshTimeSelection();},100);},{passive:true});
+      wheel.addEventListener('keydown',e=>{if(!['ArrowUp','ArrowDown'].includes(e.key))return;e.preventDefault();const current=values.indexOf(state.dateDraft[wheel.dataset.timeWheel]);const next=Math.max(0,Math.min(values.length-1,current+(e.key==='ArrowDown'?1:-1)));state.dateDraft[wheel.dataset.timeWheel]=values[next];wheel.scrollTo({top:next*32,behavior:'smooth'});refreshTimeSelection();});
+    });
+  }
+  function render({reset=false}={}) {const scroll=app.scrollTop;const pages={home,catalog,detail,config,confirm,mine,orders,orderDetail,searchResults,cityPicker,addressPicker,datePicker,vehicleInfo,equipment};app.classList.toggle('white',['detail','confirm','cityPicker','datePicker','vehicleInfo','equipment'].includes(state.page));app.classList.toggle('results-page',state.page==='searchResults');app.classList.toggle('city-page',state.page==='cityPicker');app.classList.toggle('calendar-page',state.page==='datePicker');app.innerHTML=(pages[state.page]||home)();app.scrollTop=reset?0:scroll;renderFixed();}
+  function renderFixed() {
+    if(['home','catalog','orders','mine'].includes(state.page))fixed.innerHTML=nav();
+    else if(state.page==='detail')fixed.innerHTML=purchaseBar('提交意向','confirm');
+    else if(state.page==='vehicleInfo')fixed.innerHTML=`<div class="purchase-bar showroom-bar"><div><strong>${carName(state.currentCar)}</strong><small>${state.currentCar.newCar?'新车订阅':'现车订阅'}</small></div><button class="primary" data-action="start-subscription">${state.currentCar.newCar?'选配订阅':'订阅方案'}</button></div>`;
+    else if(state.page==='equipment')fixed.innerHTML=`<div class="purchase-bar only-button"><button class="primary" data-action="back">完成选配${vehicleChoice().options.length?' · 已选'+vehicleChoice().options.length+'项':''}</button></div>`;
+    else if(state.page==='addressPicker')fixed.innerHTML=`<div class="purchase-bar only-button"><button class="primary" data-action="save-address">保存交付地点</button></div>`;
+    else if(state.page==='config')fixed.innerHTML=purchaseBar('保存方案','save-config',{amount:total(state.configDraft),term:state.configDraft.term});
+    else if(state.page==='confirm')fixed.innerHTML=purchaseBar('提交意向','submit',{disabled:!state.agreement,amount:total()});
+    else if(state.page==='orderDetail'){const o=selectedOrder();fixed.innerHTML=o?.status==='pending'?`<div class="purchase-bar payment-footer"><div><small>首期应付</small>${price(firstPayment(o))}</div><button class="primary" data-action="resume-payment">交首期款</button></div>`:`<div class="purchase-bar only-button"><button class="primary" data-action="sheet" data-value="support">联系订阅管家</button></div>`;}
+    else if(state.page==='datePicker'){fixed.innerHTML=calendarFooter();syncTimeWheels();}else fixed.innerHTML='';
+  }
+  function go(page,{back=false}={}) {if(state.page!==page&&!back)state.backStack.push({page:state.page,scroll:app.scrollTop});hideToast();closeSheet();state.page=page;render({reset:true});}
+  function back() {if(state.page==='config')state.configDraft=null;if(state.page==='addressPicker')state.addressDraft=null;const previous=state.backStack.pop();go(previous?.page||'home',{back:true});if(previous)app.scrollTop=previous.scroll;}
+  function hideToast() {clearTimeout(toastTimer);$('#toast').classList.remove('show');}
+  function toast(message) {clearTimeout(toastTimer);const node=$('#toast');node.textContent=message;node.classList.add('show');toastTimer=setTimeout(()=>node.classList.remove('show'),2300);}
+  function sheetFrame(title,body) {return `<div class="sheet-mask" data-dismiss><section class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title" tabindex="-1"><div class="sheet-handle"></div><div class="sheet-head"><h2 id="sheet-title">${title}</h2><button class="icon-button" data-action="close-sheet" aria-label="关闭">${icon('X')}</button></div>${body}</section></div>`;}
+  function chooseRows(items,action,current) {return items.map(([v,t,n])=>`<button class="sheet-choice ${String(current)===String(v)?'active':''}" data-action="${action}" data-value="${v}"><span>${t}</span>${String(current)===String(v)?icon('Check'): `<span>${n||''}</span>`}</button>`).join('');}
+  function businessSheet(type,o) {
+    if(type==='intent-rules')return sheetFrame('订阅意向说明',`<section class="sheet-section"><h3>提交意向，不产生支付</h3><p>所选车款、周期及地点用于顾问了解你的需求。本次提交不视为签署租赁合同，也不会扣款。</p></section><section class="sheet-section"><h3>先确认报价，再安排车辆</h3><p>顾问将联系你确认车款、配置、订阅费用、押金及交付时间。</p></section><button class="primary" data-action="close-sheet">了解了</button>`);
+    if(type==='auth')return sheetFrame('实名与信用评估',`<p class="sheet-text">确认身份与驾驶资格，并通过芝麻信用等服务评估押金方案。</p><div class="auth-status">实名及驾驶资格<span>模拟核验</span></div><div class="auth-status">信用免押评估<span>选择演示结果</span></div><p class="sheet-note">不连接实际信用服务，不采集个人证件。以下按钮仅切换本地模拟结果。</p><button class="primary" data-action="finish-auth" data-value="waived">模拟通过 · 车辆免押</button><button class="secondary full-width spaced" data-action="finish-auth" data-value="deposit">按¥3,000押金方案继续</button>`);
+    if(type==='deposit')return sheetFrame('信用与押金',`<section class="sheet-section"><h3>${vehicleDeposit()===0?'当前账号可享信用免押':'可申请信用免押'}</h3><p>支持芝麻信用等服务评估。车辆押金示例为¥3,000，信用评估通过后可减免，实际以订单审核为准。</p></section>${pair('当前演示押金',money(vehicleDeposit()))}${pair('押金用途','车辆履约保障')}${pair('归还与退款','验车及费用结清后按合同退还')}<p class="sheet-note">免押不代表免除违章、车损等责任。已有订单押金不受后续账号评估变化影响。</p><button class="primary" data-action="auth">体验信用评估</button>`);
+    if(type==='payment'){
+      if(!o||o.status!=='pending'||o.paid||!o.quoteConfirmed)return sheetFrame('暂无待交首期款','<p class="sheet-text">请先由管家确认订阅方案。</p>');
+      return sheetFrame('交首期款',`<p class="eyebrow">${carName(carOf(o))} · 第1期 / 共${o.term}期</p><div class="amount-due">${money(firstPayment(o))}</div><div class="fee-panel">${pair('首期月费',money(o.monthly))}${pair('本次应付',money(firstPayment(o)),true)}</div><p class="sheet-text">本次仅支付首期月费，无需绑卡。</p><p class="sheet-note">模拟支付，不会真实扣款。押金单独评估，不在本次收取。</p><div class="sheet-actions"><button class="secondary" data-action="close-sheet">暂不支付</button><button class="primary" data-action="pay">确认支付</button></div>`);
+    }
+    if(type==='prepay'){
+      const bill=o&&nextRentBill(o);
+      if(!o||o.status!=='active'||!bill)return sheetFrame('月租已缴清','<p class="sheet-text">当前没有可提前支付的月租。</p>');
+      return sheetFrame('提前交款',`<p class="eyebrow">${carName(carOf(o))} · 第${bill.period}/${o.term}期月租</p><div class="amount-due">${money(bill.amount)}</div><div class="fee-panel">${pair('应付日期',fullDateLabel(bill.date))}${pair('支付用途','提前支付下一待缴月租')}${pair('合同到期',fullDateLabel(endDate(o.start,o.term)))}</div><p class="sheet-text">支付后本期标记为已缴清；已缴期次不会再次自动扣款。订阅期限不变。</p><p class="sheet-note">仅演示账单支付，不发起实际扣款。</p><div class="sheet-actions"><button class="secondary" data-action="close-sheet">暂不支付</button><button class="primary" data-action="pay-next">确认支付</button></div>`);
+    }
+    if(type==='prepay-success')return sheetFrame('交款成功',`<div class="success-mark">${icon('Check')}</div><h3 class="success-title">这一期，已提前安排</h3><p class="success-copy">第${state.lastPayment?.period}期月租 ${money(state.lastPayment?.amount||0)} 已支付，账单已更新。本期不会重复自动扣款。</p><button class="primary" data-action="sheet" data-value="bills">查看月租账单</button><p class="sheet-note">本地演示记录，未发生真实交易。</p>`);
+    if(type==='bills')return sheetFrame('月租账单',`<p class="sheet-text">${carName(carOf(o))} · 共${o.term}期<br>合同期内租金 ${money(o.monthly*o.term)}</p><div class="bill-list">${rentBills(o).map(b=>`<div class="bill-row"><div><strong>第${b.period}期 <small>${b.date}</small></strong><span>${b.paid?(b.record?(b.period===1?'首期在线交款 · ':'主动提前支付 · ')+b.record.paidAt:'首期已支付'):'待缴月租'}</span></div><div><b>${money(b.amount)}</b><span class="${b.paid?'paid':''}">${b.paid?'已缴清':'待支付'}</span></div></div>`).join('')}</div><p class="sheet-note">押金独立于月租账单，不计入合同租金。</p>${o.status==='active'&&nextRentBill(o)?`<button class="primary" data-action="prepay" data-value="${o.id}">提前支付下一期</button>`:''}`);
+    if(type==='auto-debit')return sheetFrame('月租自动扣款',`<div class="demo-bank-card"><span>演示银行卡</span><strong>•••• •••• •••• 6688</strong><small>${o.autoDebit?'自动扣款已开启':'仅用于演示，不关联真实账户'}</small></div><section class="sheet-section"><h3>按账期支付，不重复扣款</h3><p>每期应付日仅对未缴月租发起扣款；提前交款后跳过对应期次。扣款失败时可通过订单主动补缴。</p></section><p class="sheet-note">本地Demo不保存真实银行卡号、不连接支付服务，也不会执行实际定时扣款。</p>${o.autoDebit?'<button class="secondary full-width" data-action="disable-debit">关闭自动扣款</button>':`<label class="debit-consent"><input id="debit-consent" type="checkbox" ${state.debitConsent?'checked':''}>我已了解自动扣款规则，同意使用示例卡开通演示。</label><button class="primary" data-action="enable-debit" ${state.debitConsent?'':'disabled'}>确认开通（演示）</button>`}`);
+    if(type==='advance-order'){
+      if(!o||o.status!=='inquiry')return sheetFrame('订阅进度','<p class="sheet-text">请在订单内完成首期交款，支付后进入车辆准备中。</p>');
+      return sheetFrame('管家确认方案',`${miniCar(carOf(o),'',o.packageName)}<div class="fee-panel">${pair('确认月费',money(o.monthly))}${pair('订阅周期',o.term+'个月')}${pair('合同租金总额',money(o.monthly*o.term))}${pair('首期应付',money(o.monthly),true)}</div><p class="sheet-note">演示管家确认结果，不发起真实联系。正式订单由管家确认报价后进入交款。</p><button class="primary" data-action="advance-order">模拟确认 · 进入交款</button>`);
+    }
+    return null;
+  }
+  function sheetContent(type) {
+    const o=selectedOrder();
+    const business=businessSheet(type,o);if(business)return business;
+    if(type==='term'){const terms=['home','catalog','searchResults'].includes(state.page)?(state.catalog==='new'?[12,24]:[3,6,12]):Object.keys(state.currentCar.terms).map(Number);return sheetFrame('预计用车多久',chooseRows(terms.map(t=>[t,t+'个月',t===6?'日常用车推荐':'期满可续订']),'home-term',state.term));}
+    if(type==='rules'||type==='agreement')return sheetFrame(type==='agreement'?'汽车订阅服务协议':'订阅与费用规则',`<section class="sheet-section"><h3>订阅期限与支付</h3><p>新车与现车均先提交订阅意向，由顾问确认配置、报价、押金与交付安排，提交时无需付款。合同生效后按约定支付月租，可提前支付下一待缴期次；自动扣款仅针对未缴期次。</p></section><section class="sheet-section"><h3>月费包含什么</h3><p>车辆使用、基础保障、常规保养、道路救援及服务区域内城市取送。能源、停车、违章及保障外损伤费用由使用人承担。</p></section><section class="sheet-section"><h3>里程与提前退出</h3><p>超出月度里程额度按¥1/公里结算。提前退出需联系管家测算剩余费用，不承诺无条件免费退出。</p></section><section class="sheet-section"><h3>到期续订、换车或归还</h3><p>请提前30天提交需求。换车需确认新车源和报价，归还时核验里程、车况及未结费用。</p></section><p class="sheet-note">本页面用于交互演示，正式服务以签署的合同与运营规则为准。</p>`);
+    if(type==='coverage')return sheetFrame('保障与服务说明',`<section class="sheet-section"><h3>安心保障 · 月费已含</h3><p>含基础车损、第三者责任保障和道路救援；常规保养由订阅管家协助安排。赔付范围、免赔额与责任认定以合同为准。</p></section><section class="sheet-section"><h3>无忧保障 · ¥399/月</h3><p>在基础方案上增加轮胎玻璃保障，降低部分事故的自付额度。具体责任和除外事项将在签约前展示。</p></section><section class="sheet-section"><h3>城市取送</h3><p>交付与归还支持服务范围内城市取送，需提前预约并确认地点。</p></section><button class="primary" data-action="close-sheet">了解了</button>`);
+    if(type==='privacy')return sheetFrame('隐私与授权说明',`<p class="sheet-text">用车人姓名、手机号及交付地点用于确认订阅需求与联系交付。身份、驾驶资格及信用评估仅在你主动同意后进入授权流程。</p><p class="sheet-note">当前为本地交互演示，提交的联系信息随订单保存在本浏览器，不上传、不发起真实联系。可在“我的 → 设置 → 重置演示数据”清除。无需填写真实身份证、驾驶证或支付信息。</p><button class="primary" data-action="close-sheet">了解了</button>`);
+    if(type==='identity')return sheetFrame('身份与驾驶人',`<p class="sheet-text">尾号5185 · 本人用车</p><div class="auth-status">实名认证<span>${state.verified?'已通过':'待认证'}</span></div><div class="auth-status">驾驶资格<span>${state.verified?'C1 · 已核验':'待核验'}</span></div><div class="auth-status">信用授权<span>${state.verified?'已开通':'待授权'}</span></div><p class="sheet-note">演示仅切换认证状态，无需上传个人证件。</p><button class="primary" data-action="auth">${state.verified?'重新体验认证流程':'开始认证'}</button>`);
+    if(type==='success')return sheetFrame('订阅已确认',`<div class="success-mark">${icon('Check')}</div><h3 class="success-title">你的用车计划，已就绪</h3><p class="success-copy">首期月费已支付。车辆进入整备流程，订阅管家将与你确认具体交付安排。</p><div class="fee-panel">${pair('订阅车型',carOf(o).name)}${pair('交付时间','待管家确认')}${pair('交付方式',deliveryName(o.delivery))}</div><button class="primary" data-action="view-order">查看订阅进度</button>`);
+    if(type==='inquiry-success')return sheetFrame('意向已提交',`<div class="success-mark">${icon('Check')}</div><h3 class="success-title">意向已收到</h3><p class="success-copy">${contactNotice(o)}</p><button class="primary" data-action="view-order">查看订阅意向</button>`);
+    if(type==='support'&&state.page==='orderDetail'&&o?.status==='inquiry')return sheetFrame('联系订阅管家',`<h3 class="support-number">DD · 专属管家</h3><p class="sheet-text">${contactNotice(o)}</p><div class="fee-panel">${pair('订阅车型',carName(carOf(o)))}${pair('当前方案',o.term+'个月 · '+money(o.monthly)+'/月')}</div><button class="primary" data-action="sheet" data-value="advance-order">查看管家确认方案</button><p class="sheet-note">演示流程，不发起真实联系。</p>`);
+    if(type==='support')return sheetFrame('你的订阅管家',`<p class="eyebrow">用车问题，随时找我们</p><h3 class="support-number">DD · 专属管家</h3><p class="sheet-text">车辆交付、保障、续订与归还，管家全程协助。</p><form data-form="support"><label class="field">想咨询的问题<textarea name="note" required maxlength="200" placeholder="例如：我想了解这款车的交付时间"></textarea></label><button class="primary" type="submit">提交咨询</button></form><p class="sheet-note">以当前账号联系方式回访；演示咨询仅保存于本地。</p>`);
+    if(type==='service')return sheetFrame(state.serviceType,`<form data-form="service">${state.serviceType==='续订 / 换车 / 归还'?'<label class="field">服务需求<select name="kind"><option>续订</option><option>换车</option><option>归还</option></select></label>':''}<label class="field">${state.serviceType==='道路救援'?'车辆当前位置':'补充说明'}<textarea name="note" required maxlength="200" placeholder="${state.serviceType==='道路救援'?'请输入车辆位置与遇到的问题':'告诉管家你的需求或方便联系的时间'}"></textarea></label><label class="field">期望联系时间<select name="contact"><option>尽快联系</option><option>今天下午</option><option>明天上午</option></select></label><button class="primary" type="submit">提交服务申请</button></form>`);
+    if(type==='contracts'){if(!o)return sheetFrame('合同中心','<p class="sheet-text">暂无订阅合同，完成订单后可在此查看。</p>');return sheetFrame('合同中心',`<section class="sheet-section"><h3>汽车订阅服务协议</h3><p>订单 ${o.id}<br>${carOf(o).name} · ${o.term}个月<br>${o.status==='inquiry'?'交付待商务确认':dateLabel(o.start)+'起'} · ${money(o.monthly)}/月</p></section>${pair('合同状态',o.status==='inquiry'?'待报价确认':o.paid?'已签署（演示）':'待签署')}${pair('合同总价',money(o.monthly*o.term))}${pair('保障方案',coverageName(o.coverage))}<p class="sheet-note">这里展示演示合同摘要。正式合同包含保障责任、退出、车况验收及费用结算条款。</p><button class="primary" data-action="sheet" data-value="agreement">阅读协议内容</button>`);}
+    if(type==='invoice')return sheetFrame('账单与发票',`<div class="fee-panel"><h2>已支付账单</h2>${state.orders.filter(x=>x.paid).flatMap(x=>rentBills(x).filter(b=>b.paid).map(b=>pair(carOf(x).name+' · 第'+b.period+'期',money(b.amount)))).join('')||'<p>暂无已支付账单</p>'}</div>${state.invoice?`<p class="sheet-text">发票申请已受理<br>抬头：${escape(state.invoice.title)}<br>邮箱：${escape(state.invoice.email)}</p>`:`<form data-form="invoice"><label class="field">发票抬头<input name="title" required placeholder="个人或公司全称" maxlength="80"></label><label class="field">接收邮箱<input name="email" type="email" required placeholder="用于接收电子发票" maxlength="100"></label><button class="primary" type="submit" ${!state.orders.some(x=>x.paid)?'disabled':''}>申请电子发票</button></form>`}<p class="sheet-note">当前为本地演示，不实际发送或开具发票。</p>`);
+    if(type==='share')return sheetFrame('分享订阅方案',`${miniCar(state.currentCar,`${state.term}个月 · ${money(monthly())}/月`)}<div class="divider" style="margin:20px 0"></div><p class="sheet-text">${state.city} · ${number(state.mileage)}公里/月<br>保险、保养、道路救援与城市取送已包含。</p><button class="primary" data-action="copy-plan">复制方案摘要</button>`);
+    if(type==='progress-demo')return sheetFrame('订单进度演示',state.orders.filter(x=>x.status==='inquiry').map(x=>`<button class="sheet-choice" data-action="demo-order" data-value="${x.id}"><span>${carName(carOf(x))}<small> · ${labels[x.status]}</small></span>${icon('ChevronRight',true)}</button>`).join('')||'<p class="sheet-text">暂无可推进的意向订单。</p>');
+    if(type==='settings')return sheetFrame('演示设置',`<button class="sheet-choice" data-action="sheet" data-value="progress-demo"><span>模拟管家确认报价</span>${icon('ChevronRight',true)}</button><button class="sheet-choice" data-action="reset-auth"><span>重置认证状态</span>${icon('ChevronRight',true)}</button><button class="sheet-choice" data-action="sheet" data-value="reset"><span>重置演示数据</span>${icon('ChevronRight',true)}</button><p class="sheet-note">DD订阅 · 10月20日评审版<br>部分车型图片为示意图；厂家配置资料已核对，车源、月费、支付及履约为本地模拟。</p>`);
+    if(type==='reset')return sheetFrame('重置演示数据',`<p class="sheet-text">将清除本地新增订单、服务记录与发票申请，并恢复一笔示例订阅。原有演示备份文件仍然保留。</p><div class="sheet-actions"><button class="secondary" data-action="close-sheet">取消</button><button class="primary" data-action="reset">确认重置</button></div>`);
+    return sheetFrame('服务说明','<p class="sheet-text">请联系订阅管家了解详细信息。</p>');
+  }
+  function openSheet(type) {
+    hideToast();
+    if(type==='address'){state.addressDraft={city:state.city,address:state.address};go('addressPicker');return;}
+    if(type==='city'){state.cityQuery='';go('cityPicker');return;}
+    if(type==='date'){
+      const [hour,minute]=state.time.split(':').map(Number);
+      state.dateDraft={date:state.start,hour,minute};
+      go('datePicker');
+      if(state.start.slice(0,7)!=='2026-10')requestAnimationFrame(()=>app.querySelector('.calendar-day.selected')?.scrollIntoView({block:'center'}));
+      return;
+    }
+    showSheet(type,sheetContent(type));
+  }
+  function closeSheet() {const wasOpen=!!state.sheet;state.sheet=null;overlays.innerHTML='';app.inert=false;fixed.inert=false;app.classList.remove('scroll-locked');if(wasOpen){app.scrollTop=sheetScrollTop;if(lastFocus?.isConnected)lastFocus.focus({preventScroll:true});app.scrollTop=sheetScrollTop;}}
+  function createOrder(status) {
+    const p=chosenPackage();
+    const plan={carId:state.currentCar.id,monthly:monthly(),term:state.term,mileage:state.mileage,coverage:state.coverage,delivery:state.delivery,city:state.city,address:state.address,driverName:state.driverName,driverPhone:state.driverPhone,start:state.currentCar.newCar?'2026-11-20':state.start,time:state.time,packageId:p?.id||'',packageName:p?.name||'',packageSummary:p?configSummary():'',deposit:null};
+    const existing=state.orders.find(o=>o.id===state.checkoutOrderId&&o.status===status&&!o.paid&&Object.entries(plan).every(([k,v])=>o[k]===v));
+    if(existing){state.selectedOrder=existing.id;return existing;}
+    const id='DD'+Date.now().toString().slice(-12);const o={id,...plan,status,paid:false,services:[],rentPayments:[]};state.orders.unshift(o);state.selectedOrder=id;state.checkoutOrderId=id;save();return o;
+  }
+  function afterAuth(waived) {state.verified=true;state.depositWaived=waived;
+    if(state.sheetOrigin==='checkout'){const o=selectedOrder();if(o&&o.status==='pending')o.deposit=vehicleDeposit();state.sheetOrigin=null;save();render();openSheet('payment');}
+    else{save();closeSheet();render();toast(waived?'演示评估通过，车辆押金已减免':'已选择¥3,000车辆押金方案');}
+  }
+  const actions = {
+    back, 'close-sheet':closeSheet,
+    nav: v=>{if(v==='orders')state.orderFilter='all';if(v==='catalog'){state.search='';state.brand='all';state.sort='default';state.catalog=state.browseCatalog;}state.backStack=[];go(v);},
+    'enter-catalog': v=>{state.catalog=state.browseCatalog=v;state.term=v==='new'?24:6;state.brand='all';state.search='';state.sort='default';go('catalog');},
+    brand: v=>{state.brand=v;render();},
+    package: v=>{if(!(vehiclePackages[state.currentCar.id]||[]).some(p=>p.id===v))return;state.packageId=v;normalizeVehicle();vehicleChoice().packageId=v;render();},
+    paint: v=>{if(!dataOf()?.colors.some(([name])=>name===v)||(dataOf().colorTrims?.[v]&&!dataOf().colorTrims[v].includes(state.packageId)))return;vehicleChoice().color=v;render();},
+    'equipment-choice': v=>{if(!['interiors','wheels'].includes(v))return;showSheet('configuration',configurationSheet(v));},
+    'choose-equipment': (v,t)=>{const key=t.dataset.key,item=dataOf()?.[key]?.find(x=>x.id===v);if(!item||fitStatus(item)==='unavailable')return;vehicleChoice()[key]=v;closeSheet();render();},
+    equipment: ()=>go('equipment'),
+    'toggle-equipment': v=>{const item=dataOf()?.options.find(x=>x.id===v);if(!item||fitStatus(item)!=='optional')return;const chosen=vehicleChoice();chosen.options=chosen.options.includes(v)?chosen.options.filter(id=>id!==v):[...chosen.options,v];render();},
+    vehicle: v=>{const c=cars.find(c=>c.id===v);if(!c)return;if(state.currentCar.id!==v&&!selectCar(v,homeTerm(c)))return;normalizeTerm();state.galleryIndex=0;go('vehicleInfo');},
+    gallery: v=>{state.galleryIndex=Number(v);render();},
+    'gallery-step': v=>{const count=galleryOf().length;state.galleryIndex=(state.galleryIndex+Number(v)+count)%count;render();},
+    'start-subscription': ()=>{normalizeTerm();normalizeVehicle();if(state.backStack.at(-1)?.page==='detail')back();else go('detail');},
+    'demo-order': v=>{state.selectedOrder=v;openSheet('advance-order');},
+
+    'stock-condition': v=>{state.catalog='stock';if(![3,6,12].includes(state.term))state.term=6;openSheet(v);},
+    'find-cars': ()=>{state.browseCatalog='stock';state.catalog='stock';go('catalog');},
+    'query-edit': v=>{Object.assign(state,state.catalogQuery);openSheet(v);},
+    'home-car-term': (v,t)=>{const c=cars.find(c=>c.id===t.dataset.car);if(!c?.terms[v])return;state.homeTerms[c.id]=Number(v);t.closest('.home-vehicle-row').outerHTML=homeVehicle(c);},
+    'home-car': v=>{const c=cars.find(c=>c.id===v);if(c&&selectCar(v,homeTerm(c)))go('detail');},
+    sheet: v=>openSheet(v),
+    mode: v=>{state.brand='all';state.search='';state.catalog=state.browseCatalog=v;state.term=v==='new'?24:6;render();},
+    city: v=>{if(!cityDistrict[v])return;state.recentCities=[v,...state.recentCities.filter(c=>c!==v)].slice(0,4);if(pickingAddressCity()){if(state.addressDraft.city!==v)state.addressDraft={city:v,address:''};}else{if(state.city!==v){state.city=v;state.address=v+'市'+cityDistrict[v];}syncQuerySelection();}back();},
+    'save-address': ()=>{const draft=state.addressDraft;if(!draft)return;const address=draft.address.trim();if(address.length<2||address.length>100){$('#address-error').textContent='请填写交付地点';$('#delivery-address').setAttribute('aria-invalid','true');$('#delivery-address').focus({preventScroll:true});return;}state.city=draft.city;state.address=address.startsWith(draft.city)?address:draft.city+'市'+address;syncQuerySelection();back();toast('交付地点已保存');},
+    'city-index': v=>$('#city-group-'+v)?.scrollIntoView({behavior:'smooth',block:'start'}),
+    relocate: ()=>{state.locatedCity='上海';$('#city-content').innerHTML=cityResults();toast('演示定位已更新为上海，未获取真实位置');},
+    'clear-city-search': ()=>{state.cityQuery='';$('#city-search').value='';$('#city-content').innerHTML=cityResults();$('#city-search').focus();},
+    'calendar-date': v=>{if(v<earliestDelivery)return;state.dateDraft.date=v;app.querySelectorAll('.calendar-day').forEach(b=>{const selected=b.dataset.value===v;b.classList.toggle('selected',selected);b.setAttribute('aria-pressed',selected);b.querySelector('small').textContent=selected?'开始用车':'';});refreshTimeSelection();},
+    'more-months': ()=>{state.calendarMonths=Math.min(12,state.calendarMonths+3);render();},
+    'time-option': (v,t)=>{state.dateDraft[t.dataset.key]=Number(v);const wheel=t.closest('[data-time-wheel]');wheel.scrollTo({top:[...wheel.children].indexOf(t)*32,behavior:'smooth'});refreshTimeSelection();},
+    'confirm-date': ()=>{state.start=state.dateDraft.date;state.time=draftTime();syncQuerySelection();back();toast('用车时间已更新');},
+    'home-term': v=>{state.term=Number(v);state.homeTerms={};syncQuerySelection();closeSheet();render();},
+    sort: ()=>{state.sort=state.sort==='price'?'default':'price';render();},
+    'clear-search': ()=>{state.search='';state.brand='all';render();},
+    car: v=>{if(selectCar(v))go('detail');},
+    config: ()=>{state.configDraft={term:state.term,mileage:state.mileage,coverage:state.coverage,delivery:state.delivery,packageId:state.packageId};go('config');},
+    'plan-option': (v,t)=>{const k=t.dataset.key,valid={term:Object.keys(state.currentCar.terms),mileage:['1500','2500','3500'],coverage:['care','premium'],delivery:['door','store']};if(!valid[k]?.includes(v))return;state[k]=['term','mileage'].includes(k)?Number(v):v;render();},
+    'config-option': (v,t)=>{const k=t.dataset.key;state.configDraft[k]=['term','mileage'].includes(k)?Number(v):v;render();},
+    'save-config': ()=>{Object.assign(state,state.configDraft);state.configDraft=null;back();toast('订阅方案已更新');},
+    'edit-contact': ()=>{if(state.backStack.at(-1)?.page==='detail')back();else go('detail');focusContact();},
+    confirm: ()=>{if(validateContact())go('confirm');},
+    submit: ()=>{if(!state.agreement||state.busy||!validateContact())return;createOrder('inquiry');openSheet('inquiry-success');},
+    auth: ()=>{state.sheetOrigin=null;openSheet('auth');},
+    'finish-auth': (v,t)=>{if(state.busy)return;state.busy=true;t.disabled=true;t.textContent='评估中…';setTimeout(()=>{state.busy=false;afterAuth(v==='waived');},350);},
+    pay: ()=>{const o=selectedOrder();if(state.busy||!o||o.status!=='pending'||o.paid||!o.quoteConfirmed)return;state.busy=true;const b=$('[data-action="pay"]');if(b){b.disabled=true;b.textContent='支付中…';}setTimeout(()=>{if(o.status==='pending'&&!o.paid){o.status='preparing';o.paid=true;o.rentPayments||=[];if(!o.rentPayments.some(r=>r.period===1))o.rentPayments.push({period:1,amount:o.monthly,paidAt:isoDate(new Date()),method:'首期在线交款（演示）'});save();}state.busy=false;if(state.selectedOrder===o.id){go('orderDetail');openSheet('success');}else toast('首期已交款，车辆准备中');},350);},
+    'pay-later': ()=>{state.orderFilter='pending';go('orders');toast('订单已保存，可在待支付中继续');},
+    'resume-payment': ()=>openSheet('payment'),
+    'view-order': ()=>go('orderDetail'),
+    'orders-filter': v=>{state.orderFilter=v;if(state.page==='orders')render({reset:true});else go('orders');},
+    order: v=>{state.selectedOrder=v;go('orderDetail');},
+    'advance-order': ()=>{const o=selectedOrder();if(!o||o.status!=='inquiry'||o.paid)return;o.status='pending';o.quoteConfirmed=true;o.quoteId='Q'+o.id.slice(-10);o.quoteConfirmedAt=isoDate(new Date());o.deposit=state.verified?vehicleDeposit():null;save();closeSheet();go('orderDetail');toast('方案已确认，请交首期款');},
+    prepay: v=>{if(v)state.selectedOrder=v;const o=selectedOrder(),bill=o&&nextRentBill(o);if(!o||o.status!=='active'||!bill){toast('当前没有待缴月租');return;}state.pendingBill={orderId:o.id,period:bill.period};openSheet('prepay');},
+    'pay-next': ()=>{const target=state.pendingBill;if(state.busy||!target)return;const o=state.orders.find(x=>x.id===target.orderId),bill=o&&rentBills(o).find(b=>b.period===target.period);if(!o||o.status!=='active'||!bill||bill.paid){toast('该账单已缴清，请勿重复支付');return;}state.busy=true;const b=$('[data-action="pay-next"]');b.disabled=true;b.textContent='支付中…';
+      setTimeout(()=>{if(!rentBills(o).find(n=>n.period===target.period).paid){const record={period:bill.period,amount:bill.amount,paidAt:isoDate(new Date()),method:'主动提前支付'};o.rentPayments||=[];o.rentPayments.push(record);state.lastPayment=record;o.nextBill=nextRentBill(o)?.date||null;save();}state.busy=false;state.pendingBill=null;render();openSheet('prepay-success');},350);},
+    'auto-debit': v=>{if(v)state.selectedOrder=v;const o=selectedOrder();if(!o||!['preparing','active'].includes(o.status))return;state.debitConsent=false;openSheet('auto-debit');},
+    'enable-debit': ()=>{const o=selectedOrder();if(!state.debitConsent||!o||!['preparing','active'].includes(o.status))return;o.autoDebit=true;save();render();openSheet('auto-debit');toast('示例银行卡已绑定，自动扣款演示已开启');},
+    'disable-debit': ()=>{const o=selectedOrder();if(!o)return;o.autoDebit=false;state.debitConsent=false;save();render();openSheet('auto-debit');toast('自动扣款已关闭，后续请主动缴纳月租');},
+    service: v=>{if(selectedOrder()?.status!=='active')return;state.serviceType=v;openSheet('service');},
+    'reset-auth': ()=>{state.verified=false;state.depositWaived=false;save();closeSheet();render();toast('认证状态已重置');},
+    reset: ()=>{state.verified=true;state.depositWaived=true;state.orders=[seedOrder()];state.selectedOrder=null;state.invoice=null;state.agreement=false;state.driverName='';state.driverPhone='';state.contactErrors={};state.addressDraft=null;state.city='上海';state.address='上海市浦东新区';state.backStack=[];save();go('home');toast('已恢复初始演示状态');},
+    'copy-plan': async()=>{const text=`DD订阅｜${state.currentCar.name}｜${state.city}｜${state.term}个月｜${number(state.mileage)}公里/月｜月费${money(monthly())}｜总价${money(total())}`;try{await navigator.clipboard.writeText(text);toast('方案摘要已复制');}catch{openSheet('share');$('.sheet').insertAdjacentHTML('beforeend',`<label class="field" style="margin-top:16px">长按或选择复制<textarea readonly>${escape(text)}</textarea></label>`);$('.sheet textarea').select();}},
+  };
+  $('#phone').addEventListener('click',e=>{if(e.target.matches('[data-dismiss]')){closeSheet();return;}const button=e.target.closest('[data-action]');if(!button||button.disabled)return;actions[button.dataset.action]?.(button.dataset.value,button);});
+  $('#phone').addEventListener('input',e=>{
+    if(e.target.id==='car-search'){state.search=e.target.value;$('#catalog-results').innerHTML=catalogResults();$('#catalog-count').innerHTML=resultCount();}
+    if(e.target.id==='city-search'){state.cityQuery=e.target.value;$('#city-content').innerHTML=cityResults();app.scrollTop=0;}
+    if(['driverName','driverPhone'].includes(e.target.name)){state[e.target.name]=e.target.value;delete state.contactErrors[e.target.name];e.target.setAttribute('aria-invalid','false');e.target.closest('.contact-field').querySelector('.field-error').textContent='';}
+    if(e.target.id==='delivery-address'&&state.addressDraft){state.addressDraft.address=e.target.value;e.target.setAttribute('aria-invalid','false');$('#address-error').textContent='';}
+  });
+  $('#phone').addEventListener('change',e=>{if(e.target.id==='debit-consent'){state.debitConsent=e.target.checked;const button=$('[data-action="enable-debit"]');if(button)button.disabled=!state.debitConsent;}if(e.target.id==='agreement'){state.agreement=e.target.checked;renderFixed();}});
+  $('#phone').addEventListener('submit',e=>{
+    const form=e.target.closest('[data-form]');if(!form)return;e.preventDefault();
+    const values=Object.fromEntries(new FormData(form)),type=form.dataset.form;
+    if(type==='date'){state.start=values.date;state.time=values.time;closeSheet();render();toast('交付时间已更新');}
+    else if(type==='service'){
+      const o=selectedOrder();if(!o||o.status!=='active')return;
+      const note=values.note.trim();if(!note){toast('请填写服务信息');return;}
+      o.services ||= [];o.services.unshift({type:values.kind||state.serviceType,note,date:values.contact});
+      save();closeSheet();render();toast('服务申请已受理，可在服务记录中查看');
+    }else if(type==='support'){
+      const note=values.note.trim();if(!note){toast('请填写咨询内容');return;}
+      const o=selectedOrder();if(o){o.inquiries ||= [];o.inquiries.unshift({note,date:'待回访'});save();}
+      closeSheet();render();toast('咨询已收到，管家将与你联系');
+    }else if(type==='invoice'){
+      state.invoice={title:values.title.trim(),email:values.email.trim()};save();openSheet('invoice');toast('发票申请已受理');
+    }
+  });
+  document.addEventListener('keydown',e=>{if(!state.sheet)return;if(e.key==='Escape'){closeSheet();return;}if(e.key==='Tab'){const focusable=[...overlays.querySelectorAll('button:not(:disabled),input,textarea,select,[tabindex="0"]')];const first=focusable[0],last=focusable.at(-1);if(e.shiftKey&&(document.activeElement===first||document.activeElement===$('.sheet'))){e.preventDefault();last?.focus();}else if(!e.shiftKey&&(document.activeElement===last||document.activeElement===$('.sheet'))){e.preventDefault();first?.focus();}}});
+  fitPreview();
+  window.addEventListener('resize',fitPreview);
+  render({reset:true});
+})();
+</script>
 </body>
 </html>
